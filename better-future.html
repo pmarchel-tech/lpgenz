@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better Future — Temukan Jurusan Impianmu dalam 20 Menit</title>
+<meta name="description" content="Tes pemetaan bakat & jurusan 19-faktor gratis untuk siswa SMA/SMK. Radar chart karakter, AI Counselor 24/7, dan laporan untuk meyakinkan orang tua.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cloud:#E0EBFF;
+  --white:#FFFFFF;
+  --lime:#9CCB00;
+  --scribble:#FDE86F;
+  --pink:#F472B6;
+  --beige:#FFF8E1;
+  --ink:#000000;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Newsreader','Playfair Display',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--cloud);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--scribble);color:var(--ink)}
+img,svg{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- shared bits ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.hl{background:linear-gradient(180deg,transparent 12%,var(--scribble) 12%,var(--scribble) 92%,transparent 92%);padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.it{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.01em}
+.pill-btn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:999px;padding:12px 26px;font-weight:700;font-size:15px;background:var(--white);color:var(--ink);transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease;box-shadow:3px 3px 0 var(--ink)}
+.pill-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.pill-btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}
+.pill-btn.lime{background:var(--lime)}
+.pill-btn.dark{background:var(--ink);color:var(--white);box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.pill-btn.dark:hover{box-shadow:7px 7px 0 rgba(0,0,0,.25)}
+.pill-btn.ghost{background:transparent;box-shadow:none}
+.pill-btn.ghost:hover{background:var(--white);box-shadow:4px 4px 0 var(--ink)}
+.tag{display:inline-block;border:1.5px solid var(--ink);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--white)}
+.sec-head{font-size:clamp(30px,4.6vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.02em}
+.sec-sub{font-size:clamp(14px,1.4vw,17px);line-height:1.65;color:#222;max-width:560px}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* folder icon (pure css) */
+.folder{position:relative;width:64px;height:46px;background:linear-gradient(180deg,#7fb0ff,#5a8ef0);border:2px solid var(--ink);border-radius:6px 8px 8px 8px;box-shadow:3px 3px 0 rgba(0,0,0,.18)}
+.folder::before{content:'';position:absolute;top:-10px;left:-2px;width:26px;height:10px;background:#7fb0ff;border:2px solid var(--ink);border-bottom:none;border-radius:6px 6px 0 0}
+.folder span{position:absolute;left:50%;top:110%;transform:translateX(-50%);font-size:10px;font-weight:600;white-space:nowrap;background:rgba(255,255,255,.85);padding:1px 5px;border-radius:4px}
+
+/* polaroid artifact */
+.pola{background:var(--white);border:2px solid var(--ink);border-radius:10px;padding:8px 8px 10px;box-shadow:5px 6px 0 rgba(0,0,0,.14);width:150px}
+.pola .ph{height:110px;border-radius:6px;border:1.5px solid var(--ink);position:relative;overflow:hidden}
+.pola .cap{font-size:10.5px;font-weight:600;margin-top:7px;display:flex;justify-content:space-between;align-items:center}
+.pola .cap i{font-style:normal;font-size:9px;color:#666}
+.pink-bd{border-color:var(--pink);box-shadow:5px 6px 0 rgba(244,114,182,.35)}
+
+/* sticky note */
+.note{background:var(--beige);border:1.5px solid rgba(0,0,0,.12);border-radius:12px;padding:18px 20px;box-shadow:0 14px 30px -12px rgba(0,0,0,.25);position:relative}
+.note::before{content:'';position:absolute;top:-10px;left:26px;width:54px;height:20px;background:rgba(253,232,111,.85);border:1px solid rgba(0,0,0,.08);transform:rotate(-4deg);border-radius:2px}
+.note .n-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#8a6d00;margin-bottom:8px}
+.note p{font-size:13.5px;line-height:1.6}
+
+/* retro window */
+.retro{background:var(--white);border:2px solid var(--ink);border-radius:14px;box-shadow:8px 8px 0 rgba(0,0,0,.16);overflow:hidden}
+.retro-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:2px solid var(--ink);background:linear-gradient(180deg,#fdfdfd,#eef3ff)}
+.retro-bar .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink)}
+.retro-bar .dot:nth-child(1){background:var(--pink)}
+.retro-bar .dot:nth-child(2){background:var(--scribble)}
+.retro-bar .dot:nth-child(3){background:var(--lime)}
+.retro-bar .fname{margin-left:8px;font-size:12px;font-weight:600;background:var(--white);border:1.5px solid var(--ink);border-radius:6px;padding:3px 12px}
+.retro-bar .spacer{flex:1}
+.retro-bar .mini{font-size:11px;color:#555}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;width:min(1180px,calc(100% - 32px))}
+.nav-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:2px solid var(--ink);border-radius:999px;padding:8px 10px 8px 20px;box-shadow:4px 4px 0 rgba(0,0,0,.15)}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.02em;margin-right:auto;white-space:nowrap}
+.logo .hl{padding:0 .12em}
+.nav-links{display:flex;gap:4px}
+.nav-links a{font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;transition:background-color .18s ease}
+.nav-links a:hover{background:var(--scribble)}
+.nav-cta{font-size:13px;font-weight:700;border:2px solid var(--ink);border-radius:999px;padding:8px 18px;background:var(--lime);transition:transform .18s ease,box-shadow .18s ease;box-shadow:2px 2px 0 var(--ink);white-space:nowrap}
+.nav-cta:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.burger{display:none;background:none;border:2px solid var(--ink);border-radius:999px;width:38px;height:38px;font-size:16px;background:var(--white)}
+.mobile-menu{display:none;flex-direction:column;gap:4px;margin-top:8px;background:var(--white);border:2px solid var(--ink);border-radius:20px;padding:12px;box-shadow:4px 4px 0 rgba(0,0,0,.15)}
+.mobile-menu a{font-weight:600;font-size:14px;padding:10px 14px;border-radius:12px}
+.mobile-menu a:hover{background:var(--scribble)}
+.mobile-menu.open{display:flex}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:150px 24px 120px;
+  background:
+    radial-gradient(ellipse 70% 45% at 18% 8%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse 60% 40% at 85% 20%,rgba(255,255,255,.9) 0%,rgba(255,255,255,0) 55%),
+    radial-gradient(ellipse 75% 50% at 50% 100%,rgba(255,255,255,.85) 0%,rgba(255,255,255,0) 60%),
+    linear-gradient(180deg,#cfe0ff 0%,var(--cloud) 45%,#eef4ff 100%)}
+.hero-inner{position:relative;z-index:3;max-width:860px}
+.badge-fire{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:9px 20px;font-size:13px;font-weight:700;box-shadow:3px 3px 0 var(--ink);margin-bottom:30px}
+.hero h1{font-size:clamp(34px,5.6vw,64px);font-weight:800;line-height:1.12;letter-spacing:-.025em;margin-bottom:26px}
+.hero .sub{font-size:clamp(14px,1.6vw,18px);line-height:1.7;max-width:640px;margin:0 auto 36px;color:#1a1a1a}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
+.trust{display:flex;gap:10px 26px;justify-content:center;flex-wrap:wrap;font-size:13px;font-weight:600}
+.trust span{background:rgba(255,255,255,.75);border:1.5px solid rgba(0,0,0,.15);border-radius:999px;padding:6px 14px}
+.art{position:absolute;z-index:2;animation:floaty 7s ease-in-out infinite}
+.art .pola{width:172px}
+.art .pola .ph{height:124px}
+.a1{top:12%;left:4%;transform:rotate(-7deg)}
+.a2{top:9%;right:5%;transform:rotate(6deg);animation-delay:-2s}
+.a3{bottom:16%;left:9%;transform:rotate(5deg);animation-delay:-4s}
+.a4{bottom:12%;right:8%;transform:rotate(-6deg);animation-delay:-1s}
+.a5{top:44%;left:1.5%;transform:rotate(-3deg);animation-delay:-3s}
+.a6{top:48%;right:2%;transform:rotate(4deg);animation-delay:-5s}
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.ph-1{background:linear-gradient(135deg,#ffd6e9,#f472b6 60%,#c9368b)}
+.ph-2{background:linear-gradient(135deg,#fff3b0,#fde86f 55%,#d9b90a)}
+.ph-3{background:linear-gradient(135deg,#d3f36b,#9ccb00 60%,#6a8f00)}
+.ph-4{background:linear-gradient(135deg,#cfe0ff,#7fb0ff 60%,#3f6fd8)}
+.ph-5{background:linear-gradient(135deg,#ffe9d1,#ffb26b 60%,#e07f1f)}
+.ph-6{background:linear-gradient(135deg,#e6dcff,#b39af0 60%,#7d5cd6)}
+.ph .doodle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ph .doodle svg{width:44px;height:44px;stroke:rgba(0,0,0,.75)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.55;animation:hint 2s ease-in-out infinite}
+@keyframes hint{0%,100%{translate:0 0}50%{translate:0 8px}}
+
+/* ---------- problems ---------- */
+.problems{background:var(--white);padding:120px 0 130px;position:relative}
+.problems .topline{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:60px}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.pain{border:2px solid var(--ink);border-radius:18px;padding:30px 26px;background:var(--white);box-shadow:5px 5px 0 rgba(0,0,0,.12);transition:transform .22s ease,box-shadow .22s ease;position:relative}
+.pain:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:8px 10px 0 rgba(0,0,0,.14)}
+.pain .emo{font-size:34px;margin-bottom:16px;display:inline-block;background:var(--beige);border:1.5px solid var(--ink);border-radius:12px;padding:8px 12px}
+.pain h3{font-size:17px;font-weight:800;line-height:1.35;margin-bottom:12px}
+.pain p{font-size:13.5px;line-height:1.65;color:#333}
+.pain:nth-child(2) .emo{background:var(--cloud)}
+.pain:nth-child(3) .emo{background:#ffe0ee}
+.pain:nth-child(4) .emo{background:#e9f7c2}
+
+/* ---------- 19 factor ---------- */
+.factors{background:linear-gradient(180deg,var(--cloud),#d7e5ff 60%,var(--cloud));padding:120px 0 130px;position:relative;overflow:hidden}
+.factors-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+.radar-wrap{padding:26px}
+.radar-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.radar-legend span{font-size:11px;font-weight:700;border:1.5px solid var(--ink);border-radius:999px;padding:4px 11px;background:var(--beige)}
+.feat-list{display:flex;flex-direction:column;gap:18px;margin-top:38px}
+.feat{display:flex;gap:16px;align-items:flex-start;background:var(--white);border:2px solid var(--ink);border-radius:16px;padding:20px 22px;box-shadow:4px 4px 0 rgba(0,0,0,.12);transition:transform .2s ease}
+.feat:hover{transform:translateX(6px)}
+.feat .ico{font-size:24px;background:var(--scribble);border:1.5px solid var(--ink);border-radius:10px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat h4{font-size:15.5px;font-weight:800;margin-bottom:5px}
+.feat p{font-size:13px;line-height:1.6;color:#333}
+.floating-folder{position:absolute;opacity:.9}
+.ff1{top:9%;right:6%;animation:floaty 8s ease-in-out infinite}
+.ff2{bottom:8%;left:4%;animation:floaty 9s ease-in-out infinite reverse}
+
+/* ---------- AI counselor ---------- */
+.ai-sec{background:var(--white);padding:120px 0 130px}
+.ai-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}
+.chat-body{padding:22px;background:linear-gradient(180deg,#fdfdff,#f2f6ff);display:flex;flex-direction:column;gap:14px;min-height:380px}
+.bubble{max-width:82%;padding:12px 16px;border-radius:16px;font-size:13.5px;line-height:1.55;border:1.5px solid var(--ink);opacity:0;transform:translateY(12px);animation:pop .5s ease forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+.bubble.me{align-self:flex-end;background:var(--cloud);border-bottom-right-radius:4px}
+.bubble.ai{align-self:flex-start;background:var(--beige);border-bottom-left-radius:4px}
+.bubble .who{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;opacity:.6}
+.bubble .time{display:block;font-size:10px;text-align:right;opacity:.5;margin-top:5px}
+.typing{align-self:flex-start;display:flex;gap:5px;padding:12px 16px;background:var(--beige);border:1.5px solid var(--ink);border-radius:16px;border-bottom-left-radius:4px}
+.typing i{width:7px;height:7px;background:#111;border-radius:50%;animation:tp 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-5px);opacity:1}}
+.chat-input{display:flex;gap:10px;padding:14px 18px;border-top:2px solid var(--ink);background:var(--white)}
+.chat-input input{flex:1;border:1.5px solid var(--ink);border-radius:999px;padding:10px 18px;font-family:inherit;font-size:13px;outline:none}
+.chat-input input:focus{box-shadow:0 0 0 3px var(--scribble)}
+.chat-input button{border:2px solid var(--ink);background:var(--lime);border-radius:999px;padding:0 20px;font-weight:800;font-size:14px;transition:transform .15s ease}
+.chat-input button:hover{transform:scale(1.06)}
+.ai-note{margin-top:26px;max-width:420px;transform:rotate(-1.6deg)}
+
+/* ---------- steps ---------- */
+.steps{background:linear-gradient(180deg,var(--cloud),#eef4ff);padding:120px 0 140px;position:relative;overflow:hidden}
+.shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:70px;position:relative}
+.step-card{background:var(--white);border:2px solid var(--ink);border-radius:20px;padding:34px 26px 30px;box-shadow:6px 6px 0 rgba(0,0,0,.14);position:relative;transition:transform .25s ease}
+.step-card:hover{transform:translateY(-8px)}
+.step-card:nth-child(1){transform:rotate(-1.4deg)}
+.step-card:nth-child(3){transform:rotate(1.4deg)}
+.step-card:nth-child(1):hover{transform:rotate(-1.4deg) translateY(-8px)}
+.step-card:nth-child(3):hover{transform:rotate(1.4deg) translateY(-8px)}
+.step-num{font-family:var(--serif);font-style:italic;font-size:52px;font-weight:600;background:var(--scribble);display:inline-block;padding:0 14px;border-radius:10px;border:2px solid var(--ink);margin-bottom:18px;line-height:1.15}
+.step-card h4{font-size:17px;font-weight:800;line-height:1.4;margin-bottom:10px}
+.step-card p{font-size:13.5px;line-height:1.6;color:#333}
+.shelf-line{position:absolute;left:-4%;right:-4%;height:10px;background:var(--white);border:2px solid var(--ink);border-radius:999px;bottom:-34px;box-shadow:0 10px 22px -8px rgba(0,0,0,.3)}
+
+/* ---------- testimonials ---------- */
+.testi{background:var(--white);padding:120px 0 130px}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;margin-top:60px}
+.t-card{background:var(--white);border:2.5px solid var(--pink);border-radius:14px;padding:14px 14px 20px;box-shadow:6px 7px 0 rgba(244,114,182,.3);transition:transform .22s ease}
+.t-card:hover{transform:translateY(-7px) rotate(.8deg)}
+.t-photo{height:150px;border-radius:8px;border:1.5px solid var(--ink);margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:44px;font-weight:600;color:rgba(0,0,0,.75);overflow:hidden}
+.t-photo img{width:100%;height:100%;object-fit:cover}
+.t-card blockquote{font-size:13.5px;line-height:1.65;padding:0 6px}
+.t-card .who{margin-top:14px;padding:0 6px;font-size:12px;font-weight:800}
+.t-card .who span{display:block;font-weight:500;font-size:11px;color:#666;margin-top:2px}
+.stars{padding:0 6px;margin-top:8px;font-size:12px;letter-spacing:2px;color:#f5a623}
+
+/* ---------- faq ---------- */
+.faq{background:var(--cloud);padding:120px 0 130px}
+.faq-list{max-width:760px;margin:56px auto 0;display:flex;flex-direction:column;gap:14px}
+.faq-item{background:var(--white);border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:4px 4px 0 rgba(0,0,0,.1)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:none;padding:20px 24px;font-size:15.5px;font-weight:700;text-align:left}
+.faq-q .pm{font-size:20px;font-weight:800;transition:transform .3s ease;flex-shrink:0;width:32px;height:32px;border:1.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--scribble)}
+.faq-item.open .pm{transform:rotate(45deg);background:var(--lime)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a p{padding:0 24px 22px;font-size:14px;line-height:1.7;color:#333}
+
+/* ---------- finale ---------- */
+.finale{background:var(--lime);padding:130px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.finale h2{font-size:clamp(44px,8vw,110px);font-weight:800;line-height:1.04;letter-spacing:-.03em;margin-bottom:48px}
+.finale h2 .l2{display:inline-block;margin-left:clamp(30px,10vw,150px)}
+.finale .pill-btn.dark{font-size:clamp(15px,1.8vw,19px);padding:18px 40px;border-color:var(--ink)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:110px;padding-top:26px;border-top:2px solid rgba(0,0,0,.35);font-size:12.5px;font-weight:600}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap}
+.foot-links a{border-bottom:1.5px solid transparent;transition:border-color .2s}
+.foot-links a:hover{border-color:var(--ink)}
+.finale .ticker{position:absolute;top:22px;left:0;right:0;overflow:hidden;opacity:.5;font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.ticker-inner{display:inline-block;animation:tick 26s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .factors-grid,.ai-grid{grid-template-columns:1fr;gap:46px}
+  .shelf{grid-template-columns:1fr;max-width:440px;margin-left:auto;margin-right:auto}
+  .a5,.a6{display:none}
+  .art .pola{width:105px}
+  .art .pola .ph{height:75px}
+}
+@media(max-width:720px){
+  .nav-links{display:none}
+  .burger{display:flex;align-items:center;justify-content:center}
+  .nav-cta{padding:8px 14px;font-size:12px}
+  .a3,.a4{display:none}
+  .a1{top:8%;left:2%}
+  .a2{top:7%;right:2%}
+  .hero{padding-top:130px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="nav-pill">
+    <a href="#" class="logo" data-testid="nav-logo">better<span class="hl">future</span></a>
+    <div class="nav-links">
+      <a href="#kenapa" data-testid="nav-link-kenapa">Kenapa Kami</a>
+      <a href="#cara-kerja" data-testid="nav-link-cara">Cara Kerja</a>
+      <a href="#fitur-ai" data-testid="nav-link-ai">Fitur AI</a>
+      <a href="#bukti-ortu" data-testid="nav-link-bukti">Bukti Ortu</a>
+      <a href="#faq" data-testid="nav-link-faq">FAQ</a>
+    </div>
+    <a href="#mulai" class="nav-cta" data-testid="nav-cta-button">Coba Tes Gratis ⚡</a>
+    <button class="burger" id="burger" aria-label="menu" data-testid="nav-burger">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#kenapa">Kenapa Kami</a>
+    <a href="#cara-kerja">Cara Kerja</a>
+    <a href="#fitur-ai">Fitur AI</a>
+    <a href="#bukti-ortu">Bukti Ortu</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="mulai">
+  <!-- floating desktop artifacts -->
+  <div class="art a1"><div class="pola"><div class="ph"><img src="assets/stress.jpg" alt="stress"></div><div class="cap">stress.png <i>PNG</i></div></div></div>
+  <div class="art a2"><div class="pola pink-bd"><div class="ph"><img src="assets/test-score.jpg" alt="hasil tes"></div><div class="cap">hasil_tes.png <i>JPG</i></div></div></div>
+  <div class="art a3"><div class="pola"><div class="ph"><img src="assets/studying-part2.jpg" alt="belajar di taman"></div><div class="cap">studying_part2.png <i>PNG</i></div></div></div>
+  <div class="art a4"><div class="pola pink-bd"><div class="ph"><img src="assets/campus-fit.jpg" alt="ootd kampus"></div><div class="cap">campus_fit.jpg <i>JPG</i></div></div></div>
+  <div class="art a5"><div class="pola"><div class="ph"><img src="assets/class.jpg" alt="kelas"></div><div class="cap">mimpi.jpg <i>JPG</i></div></div></div>
+  <div class="art a6"><div class="pola"><div class="ph"><img src="assets/studying.jpg" alt="meja belajar"></div><div class="cap">studying.png <i>PNG</i></div></div></div>
+
+  <div class="hero-inner">
+    <div class="badge-fire reveal" data-testid="hero-badge">🔥 20 Menit di HP &nbsp;•&nbsp; Langsung Tahu Jurusan Impianmu &nbsp;•&nbsp; 100% GRATIS</div>
+    <h1 class="reveal" data-testid="hero-headline">Kuliah Gak Harus <span class="hl">Tersiksa.</span><br>Temukan Jurusan yang Bikin Kamu <span class="it hl">Enjoy Belajar</span> &amp; <span class="it">Bebas Stres!</span></h1>
+    <p class="sub reveal" data-testid="hero-subheadline">Gak zaman lagi milih jurusan karena ikut-ikutan teman atau nebak-nebak berhadiah. Petakan karakter otak &amp; superpower alamimu lewat tes interaktif 20 menit sekarang!</p>
+    <div class="hero-ctas reveal">
+      <a href="#cara-kerja" class="pill-btn lime" data-testid="hero-cta-primary">Mulai Tes Gratis Sekarang 🚀</a>
+      <a href="#kenapa" class="pill-btn ghost" data-testid="hero-cta-secondary">Lihat Contoh Hasil 📊</a>
+    </div>
+    <div class="trust reveal" data-testid="hero-trust-badges">
+      <span>✅ Tanpa Instal Aplikasi</span>
+      <span>✅ Disupervisi Psikolog</span>
+      <span>✅ Bisa Langsung Dimainkan di HP</span>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll ↓</div>
+</header>
+
+<!-- ============ PROBLEMS ============ -->
+<section class="problems" id="kenapa">
+  <div class="wrap">
+    <div class="topline reveal">
+      <div>
+        <span class="tag">the pain points</span>
+        <h2 class="sec-head" style="margin-top:18px">Pernah Ngerasa<br>Kayak <span class="it hl">Gini</span> Nggak?</h2>
+      </div>
+      <p class="sec-sub">Kalau kamu anak SMA/SMK kelas 10–12, kemungkinan besar minimal satu dari empat hal ini lagi kamu rasain tiap hari. Tenang, kamu gak sendirian.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain reveal" data-testid="pain-card-1">
+        <span class="emo">🤯</span>
+        <h3>"Bingung Ditanya 'Nanti Mau Kuliah Dimana?'"</h3>
+        <p>Tiap kumpul keluarga mati gaya karena belum punya jawaban pasti.</p>
+      </div>
+      <div class="pain reveal" data-testid="pain-card-2" style="transition-delay:.08s">
+        <span class="emo">🥊</span>
+        <h3>"Dipaksa Ortu Masuk Jurusan yang Kamu Benci?"</h3>
+        <p>Ortu maunya Kedokteran/Hukum, padahal bakatmu di Desain, IT, atau Bisnis.</p>
+      </div>
+      <div class="pain reveal" data-testid="pain-card-3" style="transition-delay:.16s">
+        <span class="emo">😭</span>
+        <h3>"Takut Pindah Jurusan &amp; Rugi Waktu?"</h3>
+        <p>Ngebayangin begadang ngerjain tugas yang materinya gak masuk sama sekali di otak.</p>
+      </div>
+      <div class="pain reveal" data-testid="pain-card-4" style="transition-delay:.24s">
+        <span class="emo">🐑</span>
+        <h3>"Cuma Ikut-Ikutan Teman Tongkrongan?"</h3>
+        <p>Takut berpisah sama bestie, padahal gaya belajar kalian beda banget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 19-FACTOR ============ -->
+<section class="factors" id="cara-kerja">
+  <div class="floating-folder ff1"><div class="folder"><span>backup_bakat.zip</span></div></div>
+  <div class="floating-folder ff2"><div class="folder"><span>masa_depan/</span></div></div>
+  <div class="wrap">
+    <div class="factors-grid">
+      <div class="reveal">
+        <div class="retro" data-testid="radar-window">
+          <div class="retro-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="fname">hasil_tes.png — 19-Factor Student Map</span>
+            <span class="spacer"></span><span class="mini">100%</span>
+          </div>
+          <div class="radar-wrap">
+            <svg viewBox="0 0 380 300" width="100%" data-testid="radar-chart" aria-label="Radar chart 5 dimensi">
+              <g transform="translate(190,150)">
+                <!-- grid pentagons -->
+                <g fill="none" stroke="#b9cdf2" stroke-width="1.2">
+                  <polygon points="0,-110 104.5,-34 64.7,89 -64.7,89 -104.5,-34"/>
+                  <polygon points="0,-82.5 78.4,-25.5 48.5,66.8 -48.5,66.8 -78.4,-25.5"/>
+                  <polygon points="0,-55 52.3,-17 32.4,44.5 -32.4,44.5 -52.3,-17"/>
+                  <polygon points="0,-27.5 26.1,-8.5 16.2,22.3 -16.2,22.3 -26.1,-8.5"/>
+                </g>
+                <g stroke="#b9cdf2" stroke-width="1">
+                  <line x1="0" y1="0" x2="0" y2="-110"/><line x1="0" y1="0" x2="104.5" y2="-34"/>
+                  <line x1="0" y1="0" x2="64.7" y2="89"/><line x1="0" y1="0" x2="-64.7" y2="89"/>
+                  <line x1="0" y1="0" x2="-104.5" y2="-34"/>
+                </g>
+                <!-- data polygon -->
+                <polygon id="radarPoly" points="0,-95 90,-29 40,55 -72,99 -60,-19.5"
+                  fill="rgba(156,203,0,.45)" stroke="#000" stroke-width="2.5" stroke-linejoin="round"/>
+                <g fill="#F472B6" stroke="#000" stroke-width="1.5">
+                  <circle cx="0" cy="-95" r="5"/><circle cx="90" cy="-29" r="5"/>
+                  <circle cx="40" cy="55" r="5"/><circle cx="-72" cy="99" r="5"/><circle cx="-60" cy="-19.5" r="5"/>
+                </g>
+                <!-- labels -->
+                <g font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="10.5" fill="#000">
+                  <text x="0" y="-122" text-anchor="middle">RIASEC · Minat</text>
+                  <text x="112" y="-38" text-anchor="start">MBTI · Kognitif</text>
+                  <text x="78" y="106" text-anchor="start">DISC · Perilaku</text>
+                  <text x="-78" y="106" text-anchor="end">16PF · Mental</text>
+                  <text x="-112" y="-38" text-anchor="end">VAK · Belajar</text>
+                </g>
+              </g>
+            </svg>
+            <div class="radar-legend">
+              <span>Top Match: DKV — 94%</span>
+              <span>Informatika — 89%</span>
+              <span>Bisnis Digital — 86%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="tag">the solution · 19 faktor</span>
+        <h2 class="sec-head" style="margin:18px 0 16px">Bongkar <span class="it hl">Bahasa Pemrograman</span> Otakmu!</h2>
+        <p class="sec-sub">Satu tes interaktif, lima tools psikologi (RIASEC, MBTI, DISC, 16PF, VAK) digabung jadi 19-faktor student map yang ngebaca karaktermu dari berbagai sisi.</p>
+        <div class="feat-list">
+          <div class="feat" data-testid="feature-1">
+            <span class="ico">🎯</span>
+            <div><h4>Top 5 Rekomendasi Jurusan yang Paling "Kamu Banget"</h4><p>Bukan tebakan — dihitung dari kecocokan minat, kepribadian, dan gaya berpikirmu.</p></div>
+          </div>
+          <div class="feat" data-testid="feature-2">
+            <span class="ico">⚡</span>
+            <div><h4>Gaya Belajar Alami</h4><p>Biar belajar UTBK cepat nempel nggak pake burnout — tahu kamu tim Visual, Auditori, atau Kinestetik.</p></div>
+          </div>
+          <div class="feat" id="bukti-ortu" data-testid="feature-3">
+            <span class="ico">💬</span>
+            <div><h4>Draf Laporan Rahasia "Bicara Sama Ortu"</h4><p>Bantu kamu meyakinkan orang tua pakai DATA objektif, bukan emosi.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AI COUNSELOR ============ -->
+<section class="ai-sec" id="fitur-ai">
+  <div class="wrap">
+    <div class="ai-grid">
+      <div class="reveal">
+        <span class="tag">ai counselor 24/7</span>
+        <h2 class="sec-head" style="margin:18px 0 16px">Punya Teman Diskusi Jurusan <span class="it hl">24 Jam</span> di Saku HP-mu!</h2>
+        <p class="sec-sub">Galau jam 12 malam soal prospek kerja? Takut dihakimi kalau nanya ke orang? AI Counselor Better Future selalu online, selalu dengerin, dan jawab pakai data — bukan ceramah.</p>
+        <div class="note ai-note">
+          <div class="n-title">📌 Notes — affirmation</div>
+          <p>"curhat soal masa depan itu valid. kamu gak lebay, kamu cuma peduli sama hidupmu xx"</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="retro" data-testid="chat-window">
+          <div class="retro-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="fname">ai_counselor_chat.exe</span>
+            <span class="spacer"></span><span class="mini">● online</span>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <div class="bubble me" style="animation-delay:.2s"><span class="who">Kamu · 23:47</span>kak... aku galau banget. ortu mau aku masuk kedokteran, tapi aku sukanya gambar &amp; desain 😔<span class="time">23:47 ✓✓</span></div>
+            <div class="bubble ai" style="animation-delay:.9s"><span class="who">AI Counselor · online</span>Hai! Aku dengerin ya. Dari hasil 19-faktor kamu, skor RIASEC Artistic-ku 92 — salah satu yang tertinggi yang pernah aku lihat. Wajar banget kalau kamu ngerasa "beda jalur" sama ekspektasi ortu.<span class="time">23:48</span></div>
+            <div class="bubble me" style="animation-delay:1.6s"><span class="who">Kamu</span>terus prospek kerja DKV gimana kak? papa bilang seniman gak ada masa depannya...<span class="time">23:49 ✓✓</span></div>
+            <div class="typing" id="typingDots" style="animation:pop .4s ease 2.2s forwards;opacity:0"><i></i><i></i><i></i></div>
+            <div class="bubble ai" id="lastBubble" style="animation-delay:3s;opacity:0"><span class="who">AI Counselor</span>Industri kreatif Indonesia tumbuh 8%+ per tahun — UI/UX designer, brand designer, &amp; ilustrator termasuk 10 profesi paling dicari. Aku udah siapin draf laporan "Bicara Sama Ortu" dengan datanya. Mau aku kirim sekarang? 💛<span class="time">23:49</span></div>
+          </div>
+          <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="tanya apa aja soal jurusan..." data-testid="chat-input">
+            <button id="chatSend" data-testid="chat-send-button">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEPS ============ -->
+<section class="steps">
+  <div class="wrap">
+    <div style="text-align:center" class="reveal">
+      <span class="tag">cara kerja</span>
+      <h2 class="sec-head" style="margin-top:18px">3 Langkah <span class="it hl">Mudah</span>, Semua dari HP</h2>
+    </div>
+    <div class="shelf">
+      <div class="step-card reveal" data-testid="step-card-1">
+        <div class="step-num">01</div>
+        <h4>Klik Link &amp; Isi Kuis Interaktif</h4>
+        <p>Cuma 20 menit dari HP — gak perlu instal aplikasi, langsung main di browser.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:.1s" data-testid="step-card-2">
+        <div class="step-num">02</div>
+        <h4>Dapatkan Grafik Radar &amp; Top 5 Jurusan Impian</h4>
+        <p>Karakter 19-faktormu divisualisasikan jadi radar chart yang satisfying banget.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:.2s" data-testid="step-card-3">
+        <div class="step-num">03</div>
+        <h4>Tunjukkan Hasilnya ke Orang Tua dengan Pede!</h4>
+        <p>Pakai draf laporan rahasia — ngomong sama ortu jadi adem karena ada datanya.</p>
+      </div>
+      <div class="shelf-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testi">
+  <div class="wrap">
+    <div style="text-align:center" class="reveal">
+      <span class="tag">social proof</span>
+      <h2 class="sec-head" style="margin-top:18px">Kata <span class="it hl">Mereka</span> yang Udah Coba</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="t-card reveal" data-testid="testimonial-1">
+        <div class="t-photo"><img src="assets/dinda.jpg" alt="Dinda"></div>
+        <blockquote>"Dulu dipaksa Kedokteran, pas tunjukin laporan Better Future ke Papa, beliau langsung setuju aku masuk DKV!"</blockquote>
+        <div class="stars">★★★★★</div>
+        <div class="who">Dinda<span>SMA 1 Jakarta</span></div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:.08s" data-testid="testimonial-2">
+        <div class="t-photo"><img src="assets/rizky.jpg" alt="Rizky"></div>
+        <blockquote>"Ternyata tipe belajarku Auditori-Kinestetik. Pantesan baca buku mulu bikin ngantuk. Nilai tryout langsung naik!"</blockquote>
+        <div class="stars">★★★★★</div>
+        <div class="who">Rizky<span>SMA 3 Bandung</span></div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:.16s" data-testid="testimonial-3">
+        <div class="t-photo"><img src="assets/fanya2.jpg" alt="Fanya"></div>
+        <blockquote>"AI Counselor-nya seru banget diajak curhat jam 1 malam pas galau jurusan!"</blockquote>
+        <div class="stars">★★★★★</div>
+        <div class="who">Fanya<span>SMA Surabaya</span></div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:.24s" data-testid="testimonial-4">
+        <div class="t-photo"><img src="assets/kevin.jpg" alt="Kevin"></div>
+        <blockquote>"Gak perlu nebak-nebak lagi. Laporannya lengkap &amp; gampang dipahami."</blockquote>
+        <div class="stars">★★★★★</div>
+        <div class="who">Kevin<span>SMA Medan</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div style="text-align:center" class="reveal">
+      <span class="tag">faq</span>
+      <h2 class="sec-head" style="margin-top:18px">Masih <span class="it hl">Ragu?</span> Wajar Kok.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal" data-testid="faq-item-1">
+        <button class="faq-q" data-testid="faq-q-1">Apakah tesnya beneran gratis?<span class="pm">+</span></button>
+        <div class="faq-a"><p>100% gratis, gak ada biaya tersembunyi. Kamu langsung dapat ringkasan hasil, radar chart karakter, dan top rekomendasi jurusan tanpa bayar sepeser pun.</p></div>
+      </div>
+      <div class="faq-item reveal" data-testid="faq-item-2">
+        <button class="faq-q" data-testid="faq-q-2">Berapa lama ngerjainnya?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Sekitar 20 menit dari HP. Soalnya interaktif dan seru — bukan soal ujian. Bisa dikerjain sambil rebahan, di perjalanan, atau pas jam kosong di sekolah.</p></div>
+      </div>
+      <div class="faq-item reveal" data-testid="faq-item-3">
+        <button class="faq-q" data-testid="faq-q-3">Gimana kalau aku isi asal-asalan?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Sistem kami mendeteksi pola jawaban yang gak konsisten, dan hasilnya jadi gak akurat — yang rugi kamu sendiri. Isi dengan jujur sesuai apa yang kamu rasain, bukan apa yang "kayaknya bener".</p></div>
+      </div>
+      <div class="faq-item reveal" data-testid="faq-item-4">
+        <button class="faq-q" data-testid="faq-q-4">Gimana cara ngomong ke ortu setelah tes?<span class="pm">+</span></button>
+        <div class="faq-a"><p>Tenang — kamu dapat Draf Laporan Rahasia "Bicara Sama Ortu". Isinya data objektif: kecocokan jurusan, prospek karir, dan gaya belajarmu, ditulis dengan bahasa yang sopan dan meyakinkan. Jadi diskusinya adem, bukan debat.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE ============ -->
+<footer class="finale">
+  <div class="ticker"><span class="ticker-inner">better future · 20 menit · 100% gratis · radar chart · ai counselor 24/7 · bukti ortu · better future · 20 menit · 100% gratis · radar chart · ai counselor 24/7 · bukti ortu · </span></div>
+  <h2 class="reveal" data-testid="finale-headline">congrats, now<br><span class="l2">go</span> start<br>your <span class="it">future</span> xx</h2>
+  <a href="#mulai" class="pill-btn dark" data-testid="finale-cta-button">Mulai Kuis 20 Menit Sekarang (GRATIS) 🚀</a>
+  <div class="foot">
+    <span>© 2026 <b>better<span class="hl">future</span></b> — kuliah gak harus tersiksa.</span>
+    <div class="foot-links">
+      <a href="#kenapa">Kenapa Kami</a>
+      <a href="#cara-kerja">Cara Kerja</a>
+      <a href="#fitur-ai">Fitur AI</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// mobile menu
+const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>mm.classList.toggle('open'));
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+
+// scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// faq accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q'),a=item.querySelector('.faq-a');
+  q.addEventListener('click',()=>{
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null});
+    if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px'}
+  });
+});
+
+// chat demo
+const chatBody=document.getElementById('chatBody'),chatInput=document.getElementById('chatInput'),chatSend=document.getElementById('chatSend');
+const replies=[
+  "Pertanyaan bagus! Coba kerjain kuis 20 menitnya dulu ya — nanti aku bisa jawab pakai data 19-faktor kamu secara personal 💛",
+  "Aku online 24/7 kok. Setelah hasil tesmu keluar, kita bisa bedah bareng-bareng top 5 jurusanmu!",
+  "Tenang, semua rasa galaumu valid. Kerjain kuisnya dulu, nanti aku bantu susun strategi ngomong ke ortu pakai data objektif."
+];
+let ri=0;
+function sendChat(){
+  const v=chatInput.value.trim();if(!v)return;
+  const now=new Date(),t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  const me=document.createElement('div');me.className='bubble me';
+  me.innerHTML='<span class="who">Kamu</span>'+v.replace(/</g,'&lt;')+'<span class="time">'+t+' ✓✓</span>';
+  chatBody.appendChild(me);chatInput.value='';
+  const tp=document.createElement('div');tp.className='typing';tp.style.opacity=1;tp.innerHTML='<i></i><i></i><i></i>';
+  chatBody.appendChild(tp);chatBody.scrollTop=chatBody.scrollHeight;
+  setTimeout(()=>{
+    tp.remove();
+    const ai=document.createElement('div');ai.className='bubble ai';
+    ai.innerHTML='<span class="who">AI Counselor</span>'+replies[ri++%replies.length]+'<span class="time">'+t+'</span>';
+    chatBody.appendChild(ai);chatBody.scrollTop=chatBody.scrollHeight;
+  },1300);
+  chatBody.scrollTop=chatBody.scrollHeight;
+}
+chatSend.addEventListener('click',sendChat);
+chatInput.addEventListener('keydown',e=>{if(e.key==='Enter')sendChat()});
+
+// hero parallax
+const arts=document.querySelectorAll('.art');
+window.addEventListener('mousemove',e=>{
+  const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
+  arts.forEach((a,i)=>{const d=(i%3+1)*7;a.style.marginLeft=(-x*d)+'px';a.style.marginTop=(-y*d)+'px'});
+});
+
+// radar chart subtle pulse
+const poly=document.getElementById('radarPoly');
+if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttribute('transform','translate(190,150) scale('+k+') translate(-190,-150)')},50)}
+</script>
+</body>
+</html>
