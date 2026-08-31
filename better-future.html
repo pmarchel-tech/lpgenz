@@ -53,15 +53,15 @@ button{font-family:inherit;cursor:pointer}
   margin: 0 4px;
 }
 .mazda-arrow.left { animation: arrowLeftPulse 1.4s infinite; }
-.mazda-arrow.right { animation: arrowRightPulse 1.4s infinite; }
+.mazda-arrow.right { transform: scaleX(-1); animation: arrowRightPulse 1.4s infinite; }
 
 @keyframes arrowLeftPulse {
   0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
 }
 @keyframes arrowRightPulse {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-5px); }
+  0%, 100% { transform: scaleX(-1) translateX(0); }
+  50% { transform: scaleX(-1) translateX(5px); }
 }
 
 
@@ -532,7 +532,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
               <a href="#mulai" class="pill-btn lime mazda-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:16px;text-align:center" data-testid="sim-cta-button">
               <span class="mazda-arrow left">➔</span>
               <span style="line-height:1.25;font-size:15.5px">Keren kan?<br><b>Yuk.. Coba Gratis.</b></span>
-              <span class="mazda-arrow right">←</span>
+              <span class="mazda-arrow right">➔</span>
             </a>
             </div>
           </div>
