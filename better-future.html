@@ -61,7 +61,7 @@ button{font-family:inherit;cursor:pointer}
 }
 @keyframes arrowRightPulse {
   0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
+  50% { transform: translateX(-5px); }
 }
 
 
@@ -529,7 +529,11 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
             
             <!-- CTA Button under Recommendations -->
             <div style="text-align:center;margin-top:14px">
-              <a href="#mulai" class="pill-btn lime mazda-btn" data-testid="sim-cta-button"><span class="mazda-arrow left">➔</span> Keren kan? Yuk coba tes GRATIS <span class="mazda-arrow right">➔</span></a>
+              <a href="#mulai" class="pill-btn lime mazda-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:16px;text-align:center" data-testid="sim-cta-button">
+              <span class="mazda-arrow left">➔</span>
+              <span style="line-height:1.25;font-size:15.5px">Keren kan?<br><b>Yuk.. Coba Gratis.</b></span>
+              <span class="mazda-arrow right">←</span>
+            </a>
             </div>
           </div>
         </div>
