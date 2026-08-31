@@ -29,6 +29,30 @@ a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer}
 
 /* ---------- shared bits ---------- */
+
+/* Interactive Simulator Styles */
+.sim-controls{background:#f4f8ff;border:1.5px solid var(--ink);border-radius:14px;padding:16px 18px;margin-top:14px}
+.sim-group{margin-bottom:14px}
+.sim-group:last-child{margin-bottom:0}
+.sim-label{font-size:12px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.sim-label span{color:#0055ff;font-weight:800}
+.sim-slider{width:100%;height:8px;border-radius:6px;background:#cbdcfd;outline:none;-webkit-appearance:none;accent-color:var(--ink);cursor:pointer}
+.sim-pills{display:flex;gap:6px;flex-wrap:wrap}
+.sim-pill{font-size:11.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:999px;padding:5px 12px;background:var(--white);color:var(--ink);cursor:pointer;transition:all .18s ease}
+.sim-pill:hover{background:var(--scribble)}
+.sim-pill.active{background:var(--lime);box-shadow:2px 2px 0 var(--ink)}
+
+.sim-results{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.sim-res-card{background:var(--white);border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px;box-shadow:3px 3px 0 rgba(0,0,0,.08);transition:all .25s ease}
+.sim-res-card:hover{transform:translateY(-2px);box-shadow:5px 5px 0 rgba(0,0,0,.12)}
+.sim-res-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.sim-res-title{font-size:13.5px;font-weight:800;color:var(--ink)}
+.sim-res-badge{font-size:11px;font-weight:800;background:var(--lime);border:1px solid var(--ink);border-radius:999px;padding:2px 8px}
+.sim-res-desc{font-size:11.5px;color:#444;line-height:1.4;margin-bottom:4px}
+.sim-res-careers{font-size:10.5px;color:#0055ff;font-weight:700}
+.loading-pulse{animation:pulse 0.8s infinite alternate}
+@keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 .hl{background:linear-gradient(180deg,transparent 12%,var(--scribble) 12%,var(--scribble) 92%,transparent 92%);padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .it{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.01em}
@@ -352,12 +376,12 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
         <div class="retro" data-testid="radar-window">
           <div class="retro-bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span class="fname">hasil_tes.png — 19-Factor Student Map</span>
-            <span class="spacer"></span><span class="mini">100%</span>
+            <span class="fname">simulasi_19factor.exe — Interaktif</span>
+            <span class="spacer"></span><span class="mini">● SIMULATOR</span>
           </div>
-          <div class="radar-wrap">
-            <svg viewBox="0 0 380 300" width="100%" data-testid="radar-chart" aria-label="Radar chart 5 dimensi">
-              <g transform="translate(190,150)">
+          <div class="radar-wrap" style="padding:16px">
+            <svg viewBox="0 0 380 290" width="100%" data-testid="radar-chart" aria-label="Radar chart 5 dimensi interaktif">
+              <g transform="translate(190,145)">
                 <!-- grid pentagons -->
                 <g fill="none" stroke="#b9cdf2" stroke-width="1.2">
                   <polygon points="0,-110 104.5,-34 64.7,89 -64.7,89 -104.5,-34"/>
@@ -370,27 +394,63 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
                   <line x1="0" y1="0" x2="64.7" y2="89"/><line x1="0" y1="0" x2="-64.7" y2="89"/>
                   <line x1="0" y1="0" x2="-104.5" y2="-34"/>
                 </g>
-                <!-- data polygon -->
+                <!-- data polygon (dynamic) -->
                 <polygon id="radarPoly" points="0,-95 90,-29 40,55 -72,99 -60,-19.5"
-                  fill="rgba(156,203,0,.45)" stroke="#000" stroke-width="2.5" stroke-linejoin="round"/>
+                  fill="rgba(156,203,0,.48)" stroke="#000" stroke-width="2.5" stroke-linejoin="round" style="transition:all .3s ease"/>
                 <g fill="#F472B6" stroke="#000" stroke-width="1.5">
-                  <circle cx="0" cy="-95" r="5"/><circle cx="90" cy="-29" r="5"/>
-                  <circle cx="40" cy="55" r="5"/><circle cx="-72" cy="99" r="5"/><circle cx="-60" cy="-19.5" r="5"/>
+                  <circle id="dot1" cx="0" cy="-95" r="5.5" style="transition:all .3s ease"/>
+                  <circle id="dot2" cx="90" cy="-29" r="5.5" style="transition:all .3s ease"/>
+                  <circle id="dot3" cx="40" cy="55" r="5.5" style="transition:all .3s ease"/>
+                  <circle id="dot4" cx="-72" cy="99" r="5.5" style="transition:all .3s ease"/>
+                  <circle id="dot5" cx="-60" cy="-19.5" r="5.5" style="transition:all .3s ease"/>
                 </g>
                 <!-- labels -->
-                <g font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="10.5" fill="#000">
-                  <text x="0" y="-122" text-anchor="middle">RIASEC · Minat</text>
+                <g font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="10.5" fill="#000">
+                  <text id="lblRiasec" x="0" y="-120" text-anchor="middle">RIASEC · Minat</text>
                   <text x="112" y="-38" text-anchor="start">MBTI · Kognitif</text>
-                  <text x="78" y="106" text-anchor="start">DISC · Perilaku</text>
+                  <text id="lblDisc" x="78" y="106" text-anchor="start">DISC · Perilaku</text>
                   <text x="-78" y="106" text-anchor="end">16PF · Mental</text>
-                  <text x="-112" y="-38" text-anchor="end">VAK · Belajar</text>
+                  <text id="lblVak" x="-112" y="-38" text-anchor="end">VAK · Belajar</text>
                 </g>
               </g>
             </svg>
-            <div class="radar-legend">
-              <span>Top Match: DKV — 94%</span>
-              <span>Informatika — 89%</span>
-              <span>Bisnis Digital — 86%</span>
+
+            <!-- Interactive controls -->
+            <div class="sim-controls">
+              <div class="sim-group">
+                <div class="sim-label">
+                  <span>🎚️ RIASEC Minat (Geser Kanan = Makin Kuat)</span>
+                  <span id="txtRiasecVal" style="color:var(--ink)">Artistic (85%)</span>
+                </div>
+                <input type="range" id="sliderRiasec" class="sim-slider" min="25" max="100" value="85" data-testid="slider-riasec">
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>🧩 DISC Perilaku:</span></div>
+                <div class="sim-pills" id="discPills">
+                  <button class="sim-pill" data-disc="D">D (Dominance / Tegas)</button>
+                  <button class="sim-pill active" data-disc="I">I (Influence / Persuasif)</button>
+                  <button class="sim-pill" data-disc="S">S (Steadiness / Sabar)</button>
+                  <button class="sim-pill" data-disc="C">C (Compliance / Detail)</button>
+                </div>
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>💡 VAK Gaya Belajar:</span></div>
+                <div class="sim-pills" id="vakPills">
+                  <button class="sim-pill active" data-vak="Visual">👁️ Visual</button>
+                  <button class="sim-pill" data-vak="Auditori">🎧 Auditori</button>
+                  <button class="sim-pill" data-vak="Kinestetik">🖐️ Kinestetik</button>
+                  <button class="sim-pill" data-vak="Read/Write">📖 Read/Write</button>
+                </div>
+              </div>
+
+              <button id="btnAnalisa" class="pill-btn lime" style="width:100%;justify-content:center;margin-top:14px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
+            </div>
+
+            <!-- Dynamic Results Cards -->
+            <div class="sim-results" id="simHasil" data-testid="sim-results">
+              <!-- JS populated -->
             </div>
           </div>
         </div>
@@ -691,5 +751,217 @@ window.addEventListener('mousemove',e=>{
 const poly=document.getElementById('radarPoly');
 if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttribute('transform','translate(190,150) scale('+k+') translate(-190,-150)')},50)}
 </script>
+
+<script>
+(function(){
+  // Simulator State
+  let state = {
+    riasec: 85,
+    disc: 'I',
+    vak: 'Visual'
+  };
+
+  const sliderRiasec = document.getElementById('sliderRiasec');
+  const txtRiasecVal = document.getElementById('txtRiasecVal');
+  const discPills = document.querySelectorAll('#discPills .sim-pill');
+  const vakPills = document.querySelectorAll('#vakPills .sim-pill');
+  const btnAnalisa = document.getElementById('btnAnalisa');
+  const simHasil = document.getElementById('simHasil');
+
+  // SVG Elements
+  const radarPoly = document.getElementById('radarPoly');
+  const dot1 = document.getElementById('dot1');
+  const dot2 = document.getElementById('dot2');
+  const dot3 = document.getElementById('dot3');
+  const dot4 = document.getElementById('dot4');
+  const dot5 = document.getElementById('dot5');
+  const lblRiasec = document.getElementById('lblRiasec');
+  const lblDisc = document.getElementById('lblDisc');
+  const lblVak = document.getElementById('lblVak');
+
+  function updateRadar(){
+    // Convert 0-100 values to pixel radius (max 110px)
+    let r1 = (state.riasec / 100) * 110;
+    
+    let r2 = 90; // MBTI
+    let r3 = 80; // DISC
+    let r4 = 75; // 16PF
+    let r5 = 85; // VAK
+
+    // Adjust DISC radius
+    if(state.disc === 'D'){ r3 = 105; r2 = 75; }
+    else if(state.disc === 'I'){ r3 = 95; r2 = 90; }
+    else if(state.disc === 'S'){ r3 = 65; r4 = 98; }
+    else if(state.disc === 'C'){ r3 = 90; r4 = 88; }
+
+    // Adjust VAK radius
+    if(state.vak === 'Visual'){ r5 = 105; }
+    else if(state.vak === 'Auditori'){ r5 = 85; }
+    else if(state.vak === 'Kinestetik'){ r5 = 98; r4 = 92; }
+    else if(state.vak === 'Read/Write'){ r5 = 75; r2 = 96; }
+
+    // 5 Pentagon vertices relative to (190, 145)
+    // 1: Top (-90 deg)
+    let p1 = { x: 0, y: -r1 };
+    // 2: Top-right (-18 deg)
+    let p2 = { x: r2 * 0.951, y: -r2 * 0.309 };
+    // 3: Bottom-right (54 deg)
+    let p3 = { x: r3 * 0.588, y: r3 * 0.809 };
+    // 4: Bottom-left (126 deg)
+    let p4 = { x: -r4 * 0.588, y: r4 * 0.809 };
+    // 5: Top-left (198 deg)
+    let p5 = { x: -r5 * 0.951, y: -r5 * 0.309 };
+
+    if(radarPoly){
+      radarPoly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y}`);
+    }
+    if(dot1){ dot1.setAttribute('cx', p1.x); dot1.setAttribute('cy', p1.y); }
+    if(dot2){ dot2.setAttribute('cx', p2.x); dot2.setAttribute('cy', p2.y); }
+    if(dot3){ dot3.setAttribute('cx', p3.x); dot3.setAttribute('cy', p3.y); }
+    if(dot4){ dot4.setAttribute('cx', p4.x); dot4.setAttribute('cy', p4.y); }
+    if(dot5){ dot5.setAttribute('cx', p5.x); dot5.setAttribute('cy', p5.y); }
+
+    // Update label text
+    let rType = "Artistic";
+    if(state.riasec < 40) rType = "Realistic";
+    else if(state.riasec < 55) rType = "Investigative";
+    else if(state.riasec < 75) rType = "Social";
+    else if(state.riasec < 90) rType = "Artistic";
+    else rType = "Enterprising";
+
+    if(txtRiasecVal) txtRiasecVal.textContent = `${rType} (${state.riasec}%)`;
+    if(lblRiasec) lblRiasec.textContent = `RIASEC · ${rType}`;
+    if(lblDisc) lblDisc.textContent = `DISC · ${state.disc}`;
+    if(lblVak) lblVak.textContent = `VAK · ${state.vak}`;
+  }
+
+  // Recommendations generator
+  function renderRecommendations(){
+    if(!simHasil) return;
+
+    let rType = "Artistic";
+    if(state.riasec < 40) rType = "Realistic";
+    else if(state.riasec < 55) rType = "Investigative";
+    else if(state.riasec < 75) rType = "Social";
+    else if(state.riasec < 90) rType = "Artistic";
+    else rType = "Enterprising";
+
+    let recs = [];
+    if (state.vak === 'Visual') {
+      if (state.disc === 'I' || state.disc === 'D') {
+        recs = [
+          { rank: 1, name: "Desain Komunikasi Visual (DKV)", match: "96%", desc: `Sangat cocok untuk tipe ${rType} & Visual. Jago visualisasi ide ide kreatif.`, careers: "💼 UI/UX Designer • Creative Director • Brand Strategist" },
+          { rank: 2, name: "Bisnis Digital & Creative Marketing", match: "92%", desc: `Pas untuk karakter ${state.disc} & Visual. Paham strategi tren media digital.`, careers: "💼 Digital Marketer • Growth Hacker • Content Lead" },
+          { rank: 3, name: "Arsitektur / Spatial Design", match: "88%", desc: `Menggabungkan imajinasi visual dengan pemetaan ruang & rancangan struktur.`, careers: "💼 Architect • Concept Artist • Interior Consultant" }
+        ];
+      } else {
+        recs = [
+          { rank: 1, name: "Teknik Informatika (UI/UX & Web)", match: "95%", desc: `Kombinasi teliti (${state.disc}) & Visual. Unggul di antarmuka & coding aplikasi.`, careers: "💼 Frontend Engineer • UI/UX Architect • Web Dev" },
+          { rank: 2, name: "Animasi & Game Development", match: "91%", desc: `Presisi dalam detail pergerakan animasi 2D/3D & visual art.`, careers: "💼 3D Animator • Game Artist • Character Designer" },
+          { rank: 3, name: "Sistem Informasi Visual", match: "87%", desc: `Menghubungkan analisis data visual dengan kebutuhan bisnis modern.`, careers: "💼 Data Visualization Specialist • Business Analyst" }
+        ];
+      }
+    } else if (state.vak === 'Auditori') {
+      if (state.disc === 'I' || state.disc === 'D') {
+        recs = [
+          { rank: 1, name: "Ilmu Komunikasi & Public Relations", match: "96%", desc: `Kuat di tipe ${state.disc} & Auditori. Persuasif dalam wicara & negosiasi publik.`, careers: "💼 PR Manager • Corporate Communicator • Media Lead" },
+          { rank: 2, name: "Hukum & Hubungan Internasional", match: "92%", desc: `Tipe argumentatif rasional, debat publik, dan diplomasi internasional.`, careers: "💼 Diplomat • Advocate • Public Policy Consultant" },
+          { rank: 3, name: "Manajemen Bisnis & Marketing", match: "88%", desc: `Unggul pitching ide bisnis, negosiasi klien, dan leadership.`, careers: "💼 Business Developer • Executive Producer • Manager" }
+        ];
+      } else {
+        recs = [
+          { rank: 1, name: "Psikologi Pendidikan & Konseling", match: "94%", desc: `Pendengar yang baik (${state.disc} & Auditori). Sangat empatis mendengarkan masalah.`, careers: "💼 Psikolog Sekolah • HR Specialist • Career Coach" },
+          { rank: 2, name: "Sastra & Linguistik Terapan", match: "90%", desc: `Peka terhadap struktur bahasa, bunyi, dan analisis penerjemahan.`, careers: "💼 Linguist • Content Editor • Translator" },
+          { rank: 3, name: "Broadcasting & Audio Production", match: "86%", desc: `Fokus pada produksi media audio, broadcasting radio, dan podcasting.`, careers: "💼 Sound Producer • Broadcaster • Audio Engineer" }
+        ];
+      }
+    } else if (state.vak === 'Kinestetik') {
+      if (state.disc === 'D' || state.disc === 'I') {
+        recs = [
+          { rank: 1, name: "Manajemen Industri & Logistik", match: "95%", desc: `Tipe aktif (${state.disc} & Kinestetik). Suka eksekusi lapangan & praktik operasional.`, careers: "💼 Supply Chain Manager • Project Operations Manager" },
+          { rank: 2, name: "Ilmu Olahraga & Health Science", match: "91%", desc: `Fokus pada fisiologi tubuh, performa fisik, dan aktivitas kinestetik.`, careers: "💼 Sports Scientist • Fitness Coach • Performance Analyst" },
+          { rank: 3, name: "Pariwisata & Event Management", match: "87%", desc: `Dinamis di lapangan, menyukai manajemen acara live dan operasional.`, careers: "💼 Event Director • Hospitality Specialist • Project Lead" }
+        ];
+      } else {
+        recs = [
+          { rank: 1, name: "Teknik Mesin / Otomotif", match: "96%", desc: `Suka merakit & memperbaiki perangkat fisik secara langsung.`, careers: "💼 Mechanical Engineer • Robotics Specialist • Product Tester" },
+          { rank: 2, name: "Kedokteran Hewan / Biologi Lab", match: "91%", desc: `Praktik laboratorium langsung dan interaksi fisik dengan spesimen biologis.`, careers: "💼 Veterinarian • Lab Researcher • Bio-analyst" },
+          { rank: 3, name: "Fisioterapi & Rehabilitasi Medis", match: "87%", desc: `Membantu pemulihan fisik pasien dengan metode kinestetik & terapi.`, careers: "💼 Physiotherapist • Clinical Therapist • Ergonomist" }
+        ];
+      }
+    } else { // Read/Write
+      if (state.disc === 'C' || state.disc === 'S') {
+        recs = [
+          { rank: 1, name: "Data Science & Statistik", match: "97%", desc: `Sangat pas untuk tipe Read/Write & ${state.disc}. Tekun menganalisis teks & data.`, careers: "💼 Data Analyst • ML Specialist • Statistician" },
+          { rank: 2, name: "Hukum / Legal Drafting", match: "93%", desc: `Kuat dalam membaca pasal, draf dokumen, dan riset analisis hukum.`, careers: "💼 Legal Counsel • Corporate Lawyer • Compliance Officer" },
+          { rank: 3, name: "Akuntansi & Keuangan Digital", match: "89%", desc: `Teliti dalam laporan keuangan, audit data, dan dokumentasi.`, careers: "💼 Auditor • Tax Consultant • Financial Analyst" }
+        ];
+      } else {
+        recs = [
+          { rank: 1, name: "Jurnalistik Digital & Content Strategy", match: "95%", desc: `Jago menulis artikel berbobot, riset literatur, dan narasi tulisan.`, careers: "💼 Editor in Chief • Journalist • Content Strategist" },
+          { rank: 2, name: "Hubungan Internasional & Research", match: "91%", desc: `Suka membaca kajian jurnal dunia, analisis diplomasi, dan policy paper.`, careers: "💼 Policy Analyst • Foreign Affairs Lead • Researcher" },
+          { rank: 3, name: "Manajemen Riset & Kebijakan Publik", match: "87%", desc: `Riset komprehensif berbasis data teks & rekomendasi kebijakan publik.`, careers: "💼 Public Policy Consultant • Think-tank Analyst" }
+        ];
+      }
+    }
+
+    let cardsHtml = recs.map(r => `
+      <div class="sim-res-card">
+        <div class="sim-res-top">
+          <div class="sim-res-title">${r.rank}. ${r.name}</div>
+          <div class="sim-res-badge">${r.match} MATCH</div>
+        </div>
+        <div class="sim-res-desc">${r.desc}</div>
+        <div class="sim-res-careers">${r.careers}</div>
+      </div>
+    `).join('');
+
+    simHasil.innerHTML = cardsHtml;
+  }
+
+  // Event Listeners
+  if(sliderRiasec){
+    sliderRiasec.addEventListener('input', function(e){
+      state.riasec = parseInt(e.target.value, 10);
+      updateRadar();
+    });
+  }
+
+  discPills.forEach(btn => {
+    btn.addEventListener('click', function(){
+      discPills.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      state.disc = this.getAttribute('data-disc');
+      updateRadar();
+    });
+  });
+
+  vakPills.forEach(btn => {
+    btn.addEventListener('click', function(){
+      vakPills.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      state.vak = this.getAttribute('data-vak');
+      updateRadar();
+    });
+  });
+
+  if(btnAnalisa){
+    btnAnalisa.addEventListener('click', function(){
+      this.classList.add('loading-pulse');
+      this.textContent = '⏳ Menganalisis Perpaduan...';
+      setTimeout(() => {
+        btnAnalisa.classList.remove('loading-pulse');
+        btnAnalisa.textContent = '⚡ Analisa 3 Jurusan Cocok Saya';
+        renderRecommendations();
+      }, 400);
+    });
+  }
+
+  // Initial Run
+  updateRadar();
+  renderRecommendations();
+})();
+</script>
+
 </body>
 </html>
