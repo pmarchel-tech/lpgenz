@@ -30,6 +30,41 @@ button{font-family:inherit;cursor:pointer}
 
 /* ---------- shared bits ---------- */
 
+/* Mazda Dimming Turn Signal (Heartbeat Pulsing Glow) */
+@keyframes mazdaPulse {
+  0% { opacity: 1; filter: drop-shadow(0 0 6px rgba(0,0,0,0.3)); transform: scale(1); }
+  18% { opacity: 1; filter: drop-shadow(0 0 16px rgba(156,203,0,0.9)); transform: scale(1.035); }
+  55% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(0,0,0,0.1)); transform: scale(0.985); }
+  100% { opacity: 1; filter: drop-shadow(0 0 6px rgba(0,0,0,0.3)); transform: scale(1); }
+}
+
+.mazda-btn {
+  font-size: 16.5px !important;
+  padding: 14px 34px !important;
+  border-width: 2.5px !important;
+  animation: mazdaPulse 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+}
+
+.mazda-arrow {
+  display: inline-block;
+  font-size: 19px;
+  font-weight: 900;
+  margin: 0 4px;
+}
+.mazda-arrow.left { animation: arrowLeftPulse 1.4s infinite; }
+.mazda-arrow.right { animation: arrowRightPulse 1.4s infinite; }
+
+@keyframes arrowLeftPulse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+@keyframes arrowRightPulse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+
 /* Compact 1-Screen RIASEC Simulator */
 .sim-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
 @media(max-width:768px){.sim-layout{grid-template-columns:1fr;gap:12px}}
@@ -485,7 +520,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
             </div>
 
             <!-- Tombol Analisa (Full Width) -->
-            <button id="btnAnalisa" class="pill-btn" style="background:var(--scribble); style="width:100%;justify-content:center;margin-top:12px;font-size:13.5px;padding:9px 16px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
+            <button id="btnAnalisa" class="pill-btn" style="background:var(--scribble); style="width:100%;justify-content:center;margin-top:22px;margin-bottom:12px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
 
             <!-- Dynamic Results Cards (3-Column Grid) -->
             <div class="sim-results-compact" id="simHasil" data-testid="sim-results">
@@ -494,7 +529,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
             
             <!-- CTA Button under Recommendations -->
             <div style="text-align:center;margin-top:14px">
-              <a href="#mulai" class="pill-btn lime" style="font-size:14px;padding:10px 24px" data-testid="sim-cta-button">Keren kan? Yuk coba tes GRATIS 🚀</a>
+              <a href="#mulai" class="pill-btn lime mazda-btn" data-testid="sim-cta-button"><span class="mazda-arrow left">➔</span> Keren kan? Yuk coba tes GRATIS <span class="mazda-arrow right">➔</span></a>
             </div>
           </div>
         </div>
