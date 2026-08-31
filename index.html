@@ -30,6 +30,27 @@ button{font-family:inherit;cursor:pointer}
 
 /* ---------- shared bits ---------- */
 
+/* Compact 1-Screen RIASEC Simulator */
+.sim-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+@media(max-width:768px){.sim-layout{grid-template-columns:1fr;gap:12px}}
+
+.sim-controls-compact{background:#f4f8ff;border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px}
+.sim-group-compact{margin-bottom:8px}
+.sim-group-compact:last-child{margin-bottom:0}
+.sim-label-compact{font-size:11.5px;font-weight:700;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center}
+.sim-label-compact span:last-child{color:#0055ff;font-weight:800}
+.sim-slider-compact{width:100%;height:6px;border-radius:6px;background:#cbdcfd;outline:none;-webkit-appearance:none;accent-color:var(--ink);cursor:pointer}
+
+.sim-results-compact{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.sim-res-card-compact{background:var(--white);border:1.5px solid var(--ink);border-radius:10px;padding:10px 12px;box-shadow:2.5px 2.5px 0 rgba(0,0,0,.08);transition:all .2s ease}
+.sim-res-card-compact:hover{transform:translateY(-2px);box-shadow:4px 4px 0 rgba(0,0,0,.12)}
+.sim-res-top-compact{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.sim-res-title-compact{font-size:12.5px;font-weight:800;color:var(--ink)}
+.sim-res-badge-compact{font-size:10px;font-weight:800;background:var(--lime);border:1px solid var(--ink);border-radius:999px;padding:1px 7px}
+.sim-res-desc-compact{font-size:11px;color:#444;line-height:1.35;margin-bottom:3px}
+.sim-res-careers-compact{font-size:10px;color:#0055ff;font-weight:700}
+
+
 /* Interactive Simulator Styles */
 .sim-controls{background:#f4f8ff;border:1.5px solid var(--ink);border-radius:14px;padding:16px 18px;margin-top:14px}
 .sim-group{margin-bottom:14px}
@@ -373,115 +394,101 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
   <div class="wrap">
     <div class="factors-grid">
       <div class="reveal">
-                <div class="retro" data-testid="radar-window">
+                        <div class="retro" data-testid="radar-window">
           <div class="retro-bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             <span class="fname">riasec_radar_sim.exe — 6-Axis Minat</span>
-            <span class="spacer"></span><span class="mini">● INTERAKTIF</span>
+            <span class="spacer"></span><span class="mini">● SIMULATOR 1-LAYAR</span>
           </div>
-          <div class="radar-wrap" style="padding:18px">
-            <!-- 6-Axis Hexagon SVG Radar Chart -->
-            <svg viewBox="0 0 440 310" width="100%" data-testid="radar-chart" aria-label="Radar chart 6 dimensi RIASEC">
-              <g transform="translate(220,150)">
-                <!-- Grid Hexagons (r = 23.75, 47.5, 71.25, 95) -->
-                <g fill="none" stroke="#b9cdf2" stroke-width="1.2">
-                  <polygon points="0,-95 82.27,-47.5 82.27,47.5 0,95 -82.27,47.5 -82.27,-47.5"/>
-                  <polygon points="0,-71.25 61.7,-35.6 61.7,35.6 0,71.25 -61.7,35.6 -61.7,-35.6"/>
-                  <polygon points="0,-47.5 41.1,-23.75 41.1,23.75 0,47.5 -41.1,23.75 -41.1,-23.75"/>
-                  <polygon points="0,-23.75 20.57,-11.87 20.57,11.87 0,23.75 -20.57,11.87 -20.57,-11.87"/>
-                </g>
-                <!-- Axis lines from center -->
-                <g stroke="#b9cdf2" stroke-width="1">
-                  <line x1="0" y1="0" x2="0" y2="-95"/>
-                  <line x1="0" y1="0" x2="82.27" y2="-47.5"/>
-                  <line x1="0" y1="0" x2="82.27" y2="47.5"/>
-                  <line x1="0" y1="0" x2="0" y2="95"/>
-                  <line x1="0" y1="0" x2="-82.27" y2="47.5"/>
-                  <line x1="0" y1="0" x2="-82.27" y2="-47.5"/>
-                </g>
-                <!-- Dynamic Data Polygon -->
-                <polygon id="radarPoly" points="0,-66.5 69.9,-40.37 75.7,43.7 0,57 -64.1,37.05 -41.1,-23.75"
-                  fill="rgba(156,203,0,.52)" stroke="#000" stroke-width="2.5" stroke-linejoin="round" style="transition:all .25s ease"/>
-                <!-- Dynamic Vertex Circles -->
-                <g fill="#F472B6" stroke="#000" stroke-width="1.5">
-                  <circle id="dotR" cx="0" cy="-66.5" r="5" style="transition:all .25s ease"/>
-                  <circle id="dotI" cx="69.9" cy="-40.37" r="5" style="transition:all .25s ease"/>
-                  <circle id="dotA" cx="75.7" cy="43.7" r="5" style="transition:all .25s ease"/>
-                  <circle id="dotS" cx="0" cy="57" r="5" style="transition:all .25s ease"/>
-                  <circle id="dotE" cx="-64.1" cy="37.05" r="5" style="transition:all .25s ease"/>
-                  <circle id="dotC" cx="-41.1" cy="-23.75" r="5" style="transition:all .25s ease"/>
-                </g>
-                <!-- Hexagon Axis Labels -->
-                <g font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="10.5" fill="#000">
-                  <text id="lblR" x="0" y="-106" text-anchor="middle">Realistic (70%)</text>
-                  <text id="lblI" x="92" y="-50" text-anchor="start">Investigative (85%)</text>
-                  <text id="lblA" x="92" y="55" text-anchor="start">Artistic (92%)</text>
-                  <text id="lblS" x="0" y="112" text-anchor="middle">Social (60%)</text>
-                  <text id="lblE" x="-92" y="55" text-anchor="end">Enterprising (78%)</text>
-                  <text id="lblC" x="-92" y="-50" text-anchor="end">Conventional (50%)</text>
-                </g>
-              </g>
-            </svg>
-
-            <!-- 6 RIASEC Sliders + DISC & VAK Controls -->
-            <div class="sim-controls">
-              <div style="font-size:12.5px;font-weight:800;margin-bottom:12px;color:var(--ink)">🎯 Atur 6 Komponen Minat RIASEC (Geser Kanan = Makin Kuat):</div>
-
-              <div class="sim-group">
-                <div class="sim-label"><span>🛠️ Realistic (R) — Teknis &amp; Praktis:</span><span id="txtR" style="color:#0055ff">70%</span></div>
-                <input type="range" id="slideR" class="sim-slider" min="15" max="100" value="70">
+          <div style="padding:14px 16px">
+            <!-- 2-Column Desktop Grid Layout -->
+            <div class="sim-layout">
+              <!-- Left Column: Hexagon Radar Chart -->
+              <div>
+                <svg viewBox="0 0 420 280" width="100%" data-testid="radar-chart" aria-label="Radar chart 6 dimensi RIASEC">
+                  <g transform="translate(210,140)">
+                    <!-- Grid Hexagons -->
+                    <g fill="none" stroke="#b9cdf2" stroke-width="1.2">
+                      <polygon points="0,-85 73.6,-42.5 73.6,42.5 0,85 -73.6,42.5 -73.6,-42.5"/>
+                      <polygon points="0,-63.75 55.2,-31.87 55.2,31.87 0,63.75 -55.2,31.87 -55.2,-31.87"/>
+                      <polygon points="0,-42.5 36.8,-21.25 36.8,21.25 0,42.5 -36.8,21.25 -36.8,-21.25"/>
+                      <polygon points="0,-21.25 18.4,-10.62 18.4,10.62 0,21.25 -18.4,10.62 -18.4,-10.62"/>
+                    </g>
+                    <!-- Axis lines -->
+                    <g stroke="#b9cdf2" stroke-width="1">
+                      <line x1="0" y1="0" x2="0" y2="-85"/>
+                      <line x1="0" y1="0" x2="73.6" y2="-42.5"/>
+                      <line x1="0" y1="0" x2="73.6" y2="42.5"/>
+                      <line x1="0" y1="0" x2="0" y2="85"/>
+                      <line x1="0" y1="0" x2="-73.6" y2="42.5"/>
+                      <line x1="0" y1="0" x2="-73.6" y2="-42.5"/>
+                    </g>
+                    <!-- Dynamic Data Polygon -->
+                    <polygon id="radarPoly" points="0,-59.5 62.56,-36.1 67.7,39.1 0,51 -57.4,33.15 -36.8,-21.25"
+                      fill="rgba(156,203,0,.52)" stroke="#000" stroke-width="2.5" stroke-linejoin="round" style="transition:all .25s ease"/>
+                    <!-- Dynamic Vertex Circles -->
+                    <g fill="#F472B6" stroke="#000" stroke-width="1.5">
+                      <circle id="dotR" cx="0" cy="-59.5" r="4.5" style="transition:all .25s ease"/>
+                      <circle id="dotI" cx="62.56" cy="-36.1" r="4.5" style="transition:all .25s ease"/>
+                      <circle id="dotA" cx="67.7" cy="39.1" r="4.5" style="transition:all .25s ease"/>
+                      <circle id="dotS" cx="0" cy="51" r="4.5" style="transition:all .25s ease"/>
+                      <circle id="dotE" cx="-64.1" cy="33.15" r="4.5" style="transition:all .25s ease"/>
+                      <circle id="dotC" cx="-36.8" cy="-21.25" r="4.5" style="transition:all .25s ease"/>
+                    </g>
+                    <!-- Hexagon Axis Labels -->
+                    <g font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="10" fill="#000">
+                      <text id="lblR" x="0" y="-96" text-anchor="middle">Realistic (70%)</text>
+                      <text id="lblI" x="82" y="-45" text-anchor="start">Investigative (85%)</text>
+                      <text id="lblA" x="82" y="50" text-anchor="start">Artistic (92%)</text>
+                      <text id="lblS" x="0" y="102" text-anchor="middle">Social (60%)</text>
+                      <text id="lblE" x="-82" y="50" text-anchor="end">Enterprising (78%)</text>
+                      <text id="lblC" x="-82" y="-45" text-anchor="end">Conventional (50%)</text>
+                    </g>
+                  </g>
+                </svg>
               </div>
 
-              <div class="sim-group">
-                <div class="sim-label"><span>🔬 Investigative (I) — Analitis &amp; Riset:</span><span id="txtI" style="color:#0055ff">85%</span></div>
-                <input type="range" id="slideI" class="sim-slider" min="15" max="100" value="85">
-              </div>
+              <!-- Right Column: 6 RIASEC Sliders -->
+              <div class="sim-controls-compact">
+                <div style="font-size:12px;font-weight:800;margin-bottom:8px;color:var(--ink)">🎯 Geser 6 Minat RIASEC (Kanan = Makin Kuat):</div>
 
-              <div class="sim-group">
-                <div class="sim-label"><span>🎨 Artistic (A) — Kreatif &amp; Desain:</span><span id="txtA" style="color:#0055ff">92%</span></div>
-                <input type="range" id="slideA" class="sim-slider" min="15" max="100" value="92">
-              </div>
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>🛠️ Realistic (R):</span><span id="txtR">70%</span></div>
+                  <input type="range" id="slideR" class="sim-slider-compact" min="15" max="100" value="70">
+                </div>
 
-              <div class="sim-group">
-                <div class="sim-label"><span>🤝 Social (S) — Edukasi &amp; Sosial:</span><span id="txtS" style="color:#0055ff">60%</span></div>
-                <input type="range" id="slideS" class="sim-slider" min="15" max="100" value="60">
-              </div>
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>🔬 Investigative (I):</span><span id="txtI">85%</span></div>
+                  <input type="range" id="slideI" class="sim-slider-compact" min="15" max="100" value="85">
+                </div>
 
-              <div class="sim-group">
-                <div class="sim-label"><span>💼 Enterprising (E) — Bisnis &amp; Lead:</span><span id="txtE" style="color:#0055ff">78%</span></div>
-                <input type="range" id="slideE" class="sim-slider" min="15" max="100" value="78">
-              </div>
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>🎨 Artistic (A):</span><span id="txtA">92%</span></div>
+                  <input type="range" id="slideA" class="sim-slider-compact" min="15" max="100" value="92">
+                </div>
 
-              <div class="sim-group">
-                <div class="sim-label"><span>📋 Conventional (C) — Data &amp; Detail:</span><span id="txtC" style="color:#0055ff">50%</span></div>
-                <input type="range" id="slideC" class="sim-slider" min="15" max="100" value="50">
-              </div>
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>🤝 Social (S):</span><span id="txtS">60%</span></div>
+                  <input type="range" id="slideS" class="sim-slider-compact" min="15" max="100" value="60">
+                </div>
 
-              <div class="sim-group" style="margin-top:14px">
-                <div class="sim-label"><span>🧩 DISC Perilaku:</span></div>
-                <div class="sim-pills" id="discPills">
-                  <button class="sim-pill" data-disc="D">D (Dominance)</button>
-                  <button class="sim-pill active" data-disc="I">I (Influence)</button>
-                  <button class="sim-pill" data-disc="S">S (Steadiness)</button>
-                  <button class="sim-pill" data-disc="C">C (Compliance)</button>
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>💼 Enterprising (E):</span><span id="txtE">78%</span></div>
+                  <input type="range" id="slideE" class="sim-slider-compact" min="15" max="100" value="78">
+                </div>
+
+                <div class="sim-group-compact">
+                  <div class="sim-label-compact"><span>📋 Conventional (C):</span><span id="txtC">50%</span></div>
+                  <input type="range" id="slideC" class="sim-slider-compact" min="15" max="100" value="50">
                 </div>
               </div>
-
-              <div class="sim-group">
-                <div class="sim-label"><span>💡 VAK Gaya Belajar:</span></div>
-                <div class="sim-pills" id="vakPills">
-                  <button class="sim-pill active" data-vak="Visual">👁️ Visual</button>
-                  <button class="sim-pill" data-vak="Auditori">🎧 Auditori</button>
-                  <button class="sim-pill" data-vak="Kinestetik">🖐️ Kinestetik</button>
-                  <button class="sim-pill" data-vak="Read/Write">📖 Read/Write</button>
-                </div>
-              </div>
-
-              <button id="btnAnalisa" class="pill-btn lime" style="width:100%;justify-content:center;margin-top:16px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
             </div>
 
-            <!-- Dynamic Results Cards -->
-            <div class="sim-results" id="simHasil" data-testid="sim-results">
+            <!-- Tombol Analisa (Full Width) -->
+            <button id="btnAnalisa" class="pill-btn lime" style="width:100%;justify-content:center;margin-top:12px;font-size:13.5px;padding:9px 16px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
+
+            <!-- Dynamic Results Cards (3-Column Grid) -->
+            <div class="sim-results-compact" id="simHasil" data-testid="sim-results">
               <!-- JS populated -->
             </div>
           </div>
@@ -785,21 +792,13 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
 </script>
 
 
+
 <script>
 (function(){
-  // RIASEC 6-Axis State
   let riasecState = {
-    R: 70,
-    I: 85,
-    A: 92,
-    S: 60,
-    E: 78,
-    C: 50,
-    disc: 'I',
-    vak: 'Visual'
+    R: 70, I: 85, A: 92, S: 60, E: 78, C: 50
   };
 
-  // DOM Elements
   const slideR = document.getElementById('slideR');
   const slideI = document.getElementById('slideI');
   const slideA = document.getElementById('slideA');
@@ -829,32 +828,24 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
   const dotE = document.getElementById('dotE');
   const dotC = document.getElementById('dotC');
 
-  const discPills = document.querySelectorAll('#discPills .sim-pill');
-  const vakPills = document.querySelectorAll('#vakPills .sim-pill');
   const btnAnalisa = document.getElementById('btnAnalisa');
   const simHasil = document.getElementById('simHasil');
 
   function updateHexRadar(){
-    // Convert 0-100 values to radius (max 100px)
-    let rR = (riasecState.R / 100) * 95;
-    let rI = (riasecState.I / 100) * 95;
-    let rA = (riasecState.A / 100) * 95;
-    let rS = (riasecState.S / 100) * 95;
-    let rE = (riasecState.E / 100) * 95;
-    let rC = (riasecState.C / 100) * 95;
+    // Convert 0-100 values to max radius 85px
+    let rR = (riasecState.R / 100) * 85;
+    let rI = (riasecState.I / 100) * 85;
+    let rA = (riasecState.A / 100) * 85;
+    let rS = (riasecState.S / 100) * 85;
+    let rE = (riasecState.E / 100) * 85;
+    let rC = (riasecState.C / 100) * 85;
 
-    // Hexagon 6 vertices relative to (190, 140)
-    // 0: R (Top -90 deg)
+    // Hexagon 6 vertices relative to (210, 140)
     let pR = { x: 0, y: -rR };
-    // 1: I (Top-Right -30 deg)
     let pI = { x: rI * 0.866, y: -rI * 0.5 };
-    // 2: A (Bottom-Right 30 deg)
     let pA = { x: rA * 0.866, y: rA * 0.5 };
-    // 3: S (Bottom 90 deg)
     let pS = { x: 0, y: rS };
-    // 4: E (Bottom-Left 150 deg)
     let pE = { x: -rE * 0.866, y: rE * 0.5 };
-    // 5: C (Top-Left -150 deg)
     let pC = { x: -rC * 0.866, y: -rC * 0.5 };
 
     if(radarPoly){
@@ -868,7 +859,6 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
     if(dotE){ dotE.setAttribute('cx', pE.x); dotE.setAttribute('cy', pE.y); }
     if(dotC){ dotC.setAttribute('cx', pC.x); dotC.setAttribute('cy', pC.y); }
 
-    // Update text labels
     if(txtR) txtR.textContent = `${riasecState.R}%`;
     if(txtI) txtI.textContent = `${riasecState.I}%`;
     if(txtA) txtA.textContent = `${riasecState.A}%`;
@@ -901,92 +891,90 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
     if(!simHasil) return;
 
     let [top1, top2] = getTop2Riasec();
-    let comboKey = top1.key + top2.key;
     let recs = [];
 
     if(top1.key === 'A' || top2.key === 'A') {
       if(top1.key === 'I' || top2.key === 'I') {
         recs = [
-          { rank: 1, name: "Desain Komunikasi Visual & Interaction Design", match: "97%", desc: `Perpaduan tertinggi ${top1.name} + ${top2.name} & ${riasecState.vak}. Sangat adaptif merancang UI/UX & produk kreatif berbasis data.`, careers: "💼 UI/UX Designer • Design Strategist • Creative Technologist" },
-          { rank: 2, name: "Arsitektur & Spatial Product Design", match: "93%", desc: `Kombinasi analisis spasial rasional & daya cipta seni visual.`, careers: "💼 Concept Architect • Interior Designer • Spatial Analyst" },
-          { rank: 3, name: "Animasi & Media Digital Interaktif", match: "89%", desc: `Memadukan seni digital 3D dengan riset pengalaman pengguna.`, careers: "💼 3D Animator • Game Artist • Motion Designer" }
+          { rank: 1, name: "Desain Komunikasi Visual (DKV)", match: "97%", desc: `Perpaduan ${top1.name} (${top1.val}%) & ${top2.name}. Sangat jago visualisasi ide kreatif berbasis riset.`, careers: "💼 UI/UX Designer • Art Director" },
+          { rank: 2, name: "Arsitektur & Spatial Design", match: "93%", desc: `Kombinasi analisis spasial rasional & daya cipta seni visual.`, careers: "💼 Concept Architect • Interior Designer" },
+          { rank: 3, name: "Animasi & Media Digital 3D", match: "89%", desc: `Memadukan seni digital 3D dengan riset visual interaktif.`, careers: "💼 3D Animator • Game Artist" }
         ];
       } else if(top1.key === 'E' || top2.key === 'E') {
         recs = [
-          { rank: 1, name: "Bisnis Digital & Creative Entrepreneurship", match: "96%", desc: `Perpaduan ${top1.name} + ${top2.name}. Pintar melihat peluang bisnis dari ide-ide kreatif media sosial.`, careers: "💼 Creative Director • E-Commerce Lead • Brand Founder" },
-          { rank: 2, name: "Pemasaran Komunikasi (Marketing Communication)", match: "92%", desc: `Kuat di penyusunan campaign, branding visual, dan persuasi audiens.`, careers: "💼 Brand Strategist • Digital Marketing Manager • Campaign Director" },
-          { rank: 3, name: "Industri Kreatif & Event Producer", match: "88%", desc: `Suka eksekusi ide acara besar & merancang strategi bisnis hiburan.`, careers: "💼 Event Director • Show Producer • Entertainment Manager" }
+          { rank: 1, name: "Bisnis Digital & Creative Marketing", match: "96%", desc: `Perpaduan ${top1.name} & ${top2.name}. Paham tren media sosial & strategi bisnis.`, careers: "💼 Creative Director • Brand Manager" },
+          { rank: 2, name: "Pemasaran Komunikasi (Marcom)", match: "92%", desc: `Kuat di penyusunan campaign, branding, dan persuasi audiens.`, careers: "💼 Brand Strategist • Digital Marketer" },
+          { rank: 3, name: "Industri Kreatif & Event Producer", match: "88%", desc: `Suka eksekusi acara besar & strategi bisnis hiburan.`, careers: "💼 Event Director • Show Producer" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Desain Komunikasi Visual (DKV)", match: "95%", desc: `Skor ${top1.name} mendominasi (${top1.val}%). Sangat berbakat dalam komunikasi visual & ekspresi seni.`, careers: "💼 Graphic Designer • Illustrator • Art Director" },
-          { rank: 2, name: "Media Komunikasi & Digital Storytelling", match: "91%", desc: `Kreatif mengolah konten cerita, film, dan karya visual media.`, careers: "💼 Video Producer • Content Creator • Scriptwriter" },
-          { rank: 3, name: "Seni Rupa & Industri Kreatif", match: "87%", desc: `Eksplorasi seni murni, fashion design, dan kerajinan inovatif.`, careers: "💼 Fashion Designer • Creative Consultant • Artist" }
+          { rank: 1, name: "Desain Grafis & Multimedia", match: "95%", desc: `Skor ${top1.name} mendominasi (${top1.val}%). Sangat ekspresif dalam seni visual.`, careers: "💼 Graphic Designer • Illustrator" },
+          { rank: 2, name: "Media Komunikasi & Film", match: "91%", desc: `Kreatif mengolah cerita, sinematografi, dan karya media.`, careers: "💼 Video Producer • Content Lead" },
+          { rank: 3, name: "Fashion & Product Design", match: "87%", desc: `Eksplorasi desain produk kreatif dan gaya visual.`, careers: "💼 Product Designer • Fashion Consultant" }
         ];
       }
     } else if(top1.key === 'I' || top2.key === 'I') {
       if(top1.key === 'R' || top2.key === 'R') {
         recs = [
-          { rank: 1, name: "Teknik Informatika & Data Science", match: "98%", desc: `Kombinasi kuat ${top1.name} (${top1.val}%) & ${top2.name}. Sangat jago di pemecahan logika & coding.`, careers: "💼 Data Scientist • Software Engineer • AI Developer" },
-          { rank: 2, name: "Teknik Elektro / Mechatronics", match: "94%", desc: `Kuasai riset teknologi keras, robotika, dan algoritma perangkat cerdas.`, careers: "💼 Robotics Engineer • Hardware Engineer • IoT Specialist" },
-          { rank: 3, name: "Biomedis & Biotechnology", match: "90%", desc: `Riset teknologi laboratorium medis dan pengembangan sains hayati.`, careers: "💼 Bio-Researcher • Medical Lab Specialist • Geneticist" }
+          { rank: 1, name: "Teknik Informatika & Data Science", match: "98%", desc: `Kombinasi ${top1.name} (${top1.val}%) & ${top2.name}. Sangat jago logika & coding.`, careers: "💼 Data Scientist • Software Engineer" },
+          { rank: 2, name: "Teknik Elektro / Mechatronics", match: "94%", desc: `Kuasai riset teknologi robotika & sistem cerdas.`, careers: "💼 Robotics Engineer • Hardware Lead" },
+          { rank: 3, name: "Biomedis & Biotechnology", match: "90%", desc: `Riset laboratorium sains & teknologi medis.`, careers: "💼 Bio-Researcher • Lab Analyst" }
         ];
       } else if(top1.key === 'C' || top2.key === 'C') {
         recs = [
-          { rank: 1, name: "Sistem Informasi & Cyber Security", match: "97%", desc: `Perpaduan ${top1.name} & ${top2.name}. Sangat teliti dalam analisa data, audit sistem, dan keamanan cyber.`, careers: "💼 Cyber Security Analyst • System Auditor • Database Architect" },
-          { rank: 2, name: "Statistika & Business Intelligence", match: "93%", desc: `Pakar analisa angka, pola data kuantitatif, dan riset pasar.`, careers: "💼 Business Intelligence Lead • Statistician • Actuary" },
-          { rank: 3, name: "Ilmu Aktuaria & Riset Keuangan", match: "89%", desc: `Fokus perhitungan risiko finansial & modeling matematika.`, careers: "💼 Actuarial Consultant • Risk Analyst • Quantitative Analyst" }
+          { rank: 1, name: "Sistem Informasi & Cyber Security", match: "97%", desc: `Perpaduan ${top1.name} & ${top2.name}. Teliti di analisa data & keamanan cyber.`, careers: "💼 Cyber Security Analyst • System Auditor" },
+          { rank: 2, name: "Statistika & Business Intelligence", match: "93%", desc: `Pakar analisa angka kuantitatif & pola riset.`, careers: "💼 BI Lead • Statistician" },
+          { rank: 3, name: "Ilmu Aktuaria & Riset Keuangan", match: "89%", desc: `Fokus kalkulasi risiko finansial & modeling matematika.`, careers: "💼 Actuary • Financial Risk Analyst" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Kedokteran & Sains Biomedis", match: "96%", desc: `Tipe ${top1.name} yang dominan. Sangat berdedikasi pada riset ilmiah dan diagnosis medis.`, careers: "💼 Dokter Spesialis • Medical Researcher • Biologist" },
-          { rank: 2, name: "Teknik Kimia / Farmasi", match: "92%", desc: `Riset formula obat, analisa kimiawi, dan sains laboratorium.`, careers: "💼 Pharmacist • R&D Chemical Engineer • Quality Control" },
-          { rank: 3, name: "Ilmu Fisika & Astronomi", match: "88%", desc: `Analisa fenomena alam & permodelan sains murni.`, careers: "💼 Astrophysicist • Laboratory Scientist • Academic" }
+          { rank: 1, name: "Kedokteran & Sains Biomedis", match: "96%", desc: `Tipe ${top1.name} mendominasi (${top1.val}%). Berdedikasi tinggi pada riset medis.`, careers: "💼 Medical Researcher • Specialist Doctor" },
+          { rank: 2, name: "Teknik Kimia / Farmasi", match: "92%", desc: `Riset formula obat & sains laboratorium.`, careers: "💼 Pharmacist • R&D Engineer" },
+          { rank: 3, name: "Ilmu Fisika / Sains Murni", match: "88%", desc: `Analisa fenomena alam & permodelan sains.`, careers: "💼 Research Scientist • Academic" }
         ];
       }
     } else if(top1.key === 'E' || top2.key === 'E') {
       if(top1.key === 'S' || top2.key === 'S') {
         recs = [
-          { rank: 1, name: "Ilmu Komunikasi & Public Relations", match: "97%", desc: `Sangat tinggi di ${top1.name} + ${top2.name}. Jago bangun jaringan sosial, pengaruh, & PR.`, careers: "💼 PR Director • Public Speaker • Communications Manager" },
-          { rank: 2, name: "Manajemen Bisnis & Leadership", match: "93%", desc: `Jiwa kepemimpinan kuat, negosiasi ulung, dan penggerak organisasi.`, careers: "💼 Chief Executive • Business Development Manager • Startup Founder" },
-          { rank: 3, name: "Hubungan Internasional & Diplomasi", match: "89%", desc: `Kuat di negosiasi politik dunia, advokasi sosial, dan studi global.`, careers: "💼 Diplomat • International Relations Officer • Policy Consultant" }
+          { rank: 1, name: "Ilmu Komunikasi & Public Relations", match: "97%", desc: `Dominan di ${top1.name} & ${top2.name}. Jago bangun relasi & komunikasi bisnis.`, careers: "💼 PR Manager • Public Speaker" },
+          { rank: 2, name: "Manajemen Bisnis & Leadership", match: "93%", desc: `Jiwa kepemimpinan kuat, negosiasi ulung, dan manajerial.`, careers: "💼 Executive Director • Business Dev" },
+          { rank: 3, name: "Hubungan Internasional & Diplomasi", match: "89%", desc: `Kuat di negosiasi politik & advokasi global.`, careers: "💼 Diplomat • International Consultant" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Manajemen Kewirausahaan (Entrepreneurship)", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Berani mengambil risiko bisnis & inovasi produk.`, careers: "💼 Business Founder • Venture Builder • Commercial Manager" },
-          { rank: 2, name: "Hukum Bisnis & Advokasi", match: "92%", desc: `Unggul di argumentasi bisnis, legalitas perusahan, dan negosiasi draf hukum.`, careers: "💼 Corporate Lawyer • Legal Manager • Advocate" },
-          { rank: 3, name: "Keuangan & Inovasi Perbankan", match: "88%", desc: `Fokus pada manajemen investasi, pendanaan bisnis, dan venture capital.`, careers: "💼 Investment Banker • Venture Capitalist • Financial Advisor" }
+          { rank: 1, name: "Manajemen Kewirausahaan", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Berani ambil risiko bisnis & inovasi.`, careers: "💼 Business Founder • Commercial Lead" },
+          { rank: 2, name: "Hukum Bisnis & Advokasi", match: "92%", desc: `Unggul di argumentasi bisnis & legalitas perusahaan.`, careers: "💼 Corporate Lawyer • Legal Counsel" },
+          { rank: 3, name: "Keuangan & Inovasi Perbankan", match: "88%", desc: `Fokus investasi & pendanaan bisnis.`, careers: "💼 Investment Analyst • Venture Capitalist" }
         ];
       }
     } else if(top1.key === 'S' || top2.key === 'S') {
       recs = [
-        { rank: 1, name: "Psikologi & Konseling Kesehatan Mental", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Memiliki empati tinggi untuk bimbingan & konseling.`, careers: "💼 Psikolog Klinis • HR People Manager • Life Coach" },
-        { rank: 2, name: "Pendidikan & Penggagas Komunitas", match: "92%", desc: `Dedikasi tinggi dalam mengajar, pengembangan kurikulum, dan pengabdian masyarakat.`, careers: "💼 Educator • Education Consultant • NGO Founder" },
-        { rank: 3, name: "Fisioterapi & Layanan Kesehatan", match: "88%", desc: `Interaksi langsung membantu pemulihan kesehatan fisik masyarakat.`, careers: "💼 Clinical Therapist • Healthcare Administrator • Wellness Manager" }
+        { rank: 1, name: "Psikologi & Konseling Edukasi", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Empati tinggi untuk konseling & bimbingan.`, careers: "💼 Psikolog Sekolah • HR People Lead" },
+        { rank: 2, name: "Pendidikan & Penggagas Komunitas", match: "92%", desc: `Dedikasi mengajar & pengembangan masyarakat.`, careers: "💼 Educator • NGO Coordinator" },
+        { rank: 3, name: "Fisioterapi & Layanan Kesehatan", match: "88%", desc: `Membantu pemulihan kesehatan fisik masyarakat.`, careers: "💼 Clinical Therapist • Wellness Coach" }
       ];
     } else { // R or C dominant
       recs = [
-        { rank: 1, name: "Akuntansi & Audit Keuangan Digital", match: "96%", desc: `Tipe ${top1.name} & ${top2.name}. Sangat teliti, sistematis, dan konsisten.`, careers: "💼 Senior Auditor • Financial Controller • Tax Specialist" },
-        { rank: 2, name: "Teknik Sipil & Manajemen Konstruksi", match: "92%", desc: `Fokus perancangan bangunan fisik, kalkulasi struktur, dan perizinan.`, careers: "💼 Civil Engineer • Construction Manager • Site Inspector" },
-        { rank: 3, name: "Manajemen Logistik & Rantai Pasok", match: "88%", desc: `Kuat di pengorganisasian alur barang, pergudangan, dan distribusi data bisnis.`, careers: "💼 Supply Chain Analyst • Warehouse Operations Manager • Inventory Lead" }
+        { rank: 1, name: "Akuntansi & Audit Keuangan", match: "96%", desc: `Tipe ${top1.name} & ${top2.name}. Sangat teliti, sistematis, dan konsisten.`, careers: "💼 Auditor • Tax Specialist" },
+        { rank: 2, name: "Teknik Sipil & Konstruksi", match: "92%", desc: `Fokus perancangan bangunan fisik & struktur.`, careers: "💼 Civil Engineer • Site Inspector" },
+        { rank: 3, name: "Manajemen Logistik & Rantai Pasok", match: "88%", desc: `Kuat di pengorganisasian alur barang & logistik.`, careers: "💼 Supply Chain Analyst • Logistical Manager" }
       ];
     }
 
     let cardsHtml = recs.map(r => `
-      <div class="sim-res-card">
-        <div class="sim-res-top">
-          <div class="sim-res-title">${r.rank}. ${r.name}</div>
-          <div class="sim-res-badge">${r.match} MATCH</div>
+      <div class="sim-res-card-compact">
+        <div class="sim-res-top-compact">
+          <div class="sim-res-title-compact">${r.rank}. ${r.name}</div>
+          <div class="sim-res-badge-compact">${r.match} MATCH</div>
         </div>
-        <div class="sim-res-desc">${r.desc}</div>
-        <div class="sim-res-careers">${r.careers}</div>
+        <div class="sim-res-desc-compact">${r.desc}</div>
+        <div class="sim-res-careers-compact">${r.careers}</div>
       </div>
     `).join('');
 
     simHasil.innerHTML = cardsHtml;
   }
 
-  // Event Listeners for 6 Sliders
   function bindSlider(slider, key){
     if(slider){
       slider.addEventListener('input', function(e){
@@ -1003,24 +991,6 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
   bindSlider(slideE, 'E');
   bindSlider(slideC, 'C');
 
-  discPills.forEach(btn => {
-    btn.addEventListener('click', function(){
-      discPills.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      riasecState.disc = this.getAttribute('data-disc');
-      updateHexRadar();
-    });
-  });
-
-  vakPills.forEach(btn => {
-    btn.addEventListener('click', function(){
-      vakPills.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      riasecState.vak = this.getAttribute('data-vak');
-      updateHexRadar();
-    });
-  });
-
   if(btnAnalisa){
     btnAnalisa.addEventListener('click', function(){
       this.classList.add('loading-pulse');
@@ -1029,7 +999,7 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
         btnAnalisa.classList.remove('loading-pulse');
         btnAnalisa.textContent = '⚡ Analisa 3 Jurusan Cocok Saya';
         renderHexRecommendations();
-      }, 350);
+      }, 300);
     });
   }
 
@@ -1038,6 +1008,7 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
   renderHexRecommendations();
 })();
 </script>
+
 
 
 </body>
