@@ -520,7 +520,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
             </div>
 
             <!-- Tombol Analisa (Full Width) -->
-            <button id="btnAnalisa" class="pill-btn" style="background:var(--scribble); style="width:100%;justify-content:center;margin-top:48px;margin-bottom:24px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
+            <button id="btnAnalisa" class="pill-btn" style="background:var(--scribble); style="width:100%;justify-content:center;margin-top:48px;margin-bottom:24px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Klik, untuk analisa jurusan</button>
 
             <!-- Dynamic Results Cards (3-Column Grid) -->
             <div class="sim-results-compact" id="simHasil" data-testid="sim-results">
@@ -1041,7 +1041,7 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
       this.textContent = '⏳ Menganalisis 6-Axis RIASEC...';
       setTimeout(() => {
         btnAnalisa.classList.remove('loading-pulse');
-        btnAnalisa.textContent = '⚡ Analisa 3 Jurusan Cocok Saya';
+        btnAnalisa.textContent = '⚡ Klik, untuk analisa jurusan';
         renderHexRecommendations();
       }, 300);
     });
