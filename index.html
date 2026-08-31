@@ -373,65 +373,97 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
   <div class="wrap">
     <div class="factors-grid">
       <div class="reveal">
-        <div class="retro" data-testid="radar-window">
+                <div class="retro" data-testid="radar-window">
           <div class="retro-bar">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span class="fname">simulasi_19factor.exe — Interaktif</span>
-            <span class="spacer"></span><span class="mini">● SIMULATOR</span>
+            <span class="fname">riasec_radar_sim.exe — 6-Axis Minat</span>
+            <span class="spacer"></span><span class="mini">● INTERAKTIF</span>
           </div>
-          <div class="radar-wrap" style="padding:16px">
-            <svg viewBox="0 0 380 290" width="100%" data-testid="radar-chart" aria-label="Radar chart 5 dimensi interaktif">
-              <g transform="translate(190,145)">
-                <!-- grid pentagons -->
+          <div class="radar-wrap" style="padding:18px">
+            <!-- 6-Axis Hexagon SVG Radar Chart -->
+            <svg viewBox="0 0 440 310" width="100%" data-testid="radar-chart" aria-label="Radar chart 6 dimensi RIASEC">
+              <g transform="translate(220,150)">
+                <!-- Grid Hexagons (r = 23.75, 47.5, 71.25, 95) -->
                 <g fill="none" stroke="#b9cdf2" stroke-width="1.2">
-                  <polygon points="0,-110 104.5,-34 64.7,89 -64.7,89 -104.5,-34"/>
-                  <polygon points="0,-82.5 78.4,-25.5 48.5,66.8 -48.5,66.8 -78.4,-25.5"/>
-                  <polygon points="0,-55 52.3,-17 32.4,44.5 -32.4,44.5 -52.3,-17"/>
-                  <polygon points="0,-27.5 26.1,-8.5 16.2,22.3 -16.2,22.3 -26.1,-8.5"/>
+                  <polygon points="0,-95 82.27,-47.5 82.27,47.5 0,95 -82.27,47.5 -82.27,-47.5"/>
+                  <polygon points="0,-71.25 61.7,-35.6 61.7,35.6 0,71.25 -61.7,35.6 -61.7,-35.6"/>
+                  <polygon points="0,-47.5 41.1,-23.75 41.1,23.75 0,47.5 -41.1,23.75 -41.1,-23.75"/>
+                  <polygon points="0,-23.75 20.57,-11.87 20.57,11.87 0,23.75 -20.57,11.87 -20.57,-11.87"/>
                 </g>
+                <!-- Axis lines from center -->
                 <g stroke="#b9cdf2" stroke-width="1">
-                  <line x1="0" y1="0" x2="0" y2="-110"/><line x1="0" y1="0" x2="104.5" y2="-34"/>
-                  <line x1="0" y1="0" x2="64.7" y2="89"/><line x1="0" y1="0" x2="-64.7" y2="89"/>
-                  <line x1="0" y1="0" x2="-104.5" y2="-34"/>
+                  <line x1="0" y1="0" x2="0" y2="-95"/>
+                  <line x1="0" y1="0" x2="82.27" y2="-47.5"/>
+                  <line x1="0" y1="0" x2="82.27" y2="47.5"/>
+                  <line x1="0" y1="0" x2="0" y2="95"/>
+                  <line x1="0" y1="0" x2="-82.27" y2="47.5"/>
+                  <line x1="0" y1="0" x2="-82.27" y2="-47.5"/>
                 </g>
-                <!-- data polygon (dynamic) -->
-                <polygon id="radarPoly" points="0,-95 90,-29 40,55 -72,99 -60,-19.5"
-                  fill="rgba(156,203,0,.48)" stroke="#000" stroke-width="2.5" stroke-linejoin="round" style="transition:all .3s ease"/>
+                <!-- Dynamic Data Polygon -->
+                <polygon id="radarPoly" points="0,-66.5 69.9,-40.37 75.7,43.7 0,57 -64.1,37.05 -41.1,-23.75"
+                  fill="rgba(156,203,0,.52)" stroke="#000" stroke-width="2.5" stroke-linejoin="round" style="transition:all .25s ease"/>
+                <!-- Dynamic Vertex Circles -->
                 <g fill="#F472B6" stroke="#000" stroke-width="1.5">
-                  <circle id="dot1" cx="0" cy="-95" r="5.5" style="transition:all .3s ease"/>
-                  <circle id="dot2" cx="90" cy="-29" r="5.5" style="transition:all .3s ease"/>
-                  <circle id="dot3" cx="40" cy="55" r="5.5" style="transition:all .3s ease"/>
-                  <circle id="dot4" cx="-72" cy="99" r="5.5" style="transition:all .3s ease"/>
-                  <circle id="dot5" cx="-60" cy="-19.5" r="5.5" style="transition:all .3s ease"/>
+                  <circle id="dotR" cx="0" cy="-66.5" r="5" style="transition:all .25s ease"/>
+                  <circle id="dotI" cx="69.9" cy="-40.37" r="5" style="transition:all .25s ease"/>
+                  <circle id="dotA" cx="75.7" cy="43.7" r="5" style="transition:all .25s ease"/>
+                  <circle id="dotS" cx="0" cy="57" r="5" style="transition:all .25s ease"/>
+                  <circle id="dotE" cx="-64.1" cy="37.05" r="5" style="transition:all .25s ease"/>
+                  <circle id="dotC" cx="-41.1" cy="-23.75" r="5" style="transition:all .25s ease"/>
                 </g>
-                <!-- labels -->
+                <!-- Hexagon Axis Labels -->
                 <g font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="10.5" fill="#000">
-                  <text id="lblRiasec" x="0" y="-120" text-anchor="middle">RIASEC · Minat</text>
-                  <text x="112" y="-38" text-anchor="start">MBTI · Kognitif</text>
-                  <text id="lblDisc" x="78" y="106" text-anchor="start">DISC · Perilaku</text>
-                  <text x="-78" y="106" text-anchor="end">16PF · Mental</text>
-                  <text id="lblVak" x="-112" y="-38" text-anchor="end">VAK · Belajar</text>
+                  <text id="lblR" x="0" y="-106" text-anchor="middle">Realistic (70%)</text>
+                  <text id="lblI" x="92" y="-50" text-anchor="start">Investigative (85%)</text>
+                  <text id="lblA" x="92" y="55" text-anchor="start">Artistic (92%)</text>
+                  <text id="lblS" x="0" y="112" text-anchor="middle">Social (60%)</text>
+                  <text id="lblE" x="-92" y="55" text-anchor="end">Enterprising (78%)</text>
+                  <text id="lblC" x="-92" y="-50" text-anchor="end">Conventional (50%)</text>
                 </g>
               </g>
             </svg>
 
-            <!-- Interactive controls -->
+            <!-- 6 RIASEC Sliders + DISC & VAK Controls -->
             <div class="sim-controls">
+              <div style="font-size:12.5px;font-weight:800;margin-bottom:12px;color:var(--ink)">🎯 Atur 6 Komponen Minat RIASEC (Geser Kanan = Makin Kuat):</div>
+
               <div class="sim-group">
-                <div class="sim-label">
-                  <span>🎚️ RIASEC Minat (Geser Kanan = Makin Kuat)</span>
-                  <span id="txtRiasecVal" style="color:var(--ink)">Artistic (85%)</span>
-                </div>
-                <input type="range" id="sliderRiasec" class="sim-slider" min="25" max="100" value="85" data-testid="slider-riasec">
+                <div class="sim-label"><span>🛠️ Realistic (R) — Teknis &amp; Praktis:</span><span id="txtR" style="color:#0055ff">70%</span></div>
+                <input type="range" id="slideR" class="sim-slider" min="15" max="100" value="70">
               </div>
 
               <div class="sim-group">
+                <div class="sim-label"><span>🔬 Investigative (I) — Analitis &amp; Riset:</span><span id="txtI" style="color:#0055ff">85%</span></div>
+                <input type="range" id="slideI" class="sim-slider" min="15" max="100" value="85">
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>🎨 Artistic (A) — Kreatif &amp; Desain:</span><span id="txtA" style="color:#0055ff">92%</span></div>
+                <input type="range" id="slideA" class="sim-slider" min="15" max="100" value="92">
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>🤝 Social (S) — Edukasi &amp; Sosial:</span><span id="txtS" style="color:#0055ff">60%</span></div>
+                <input type="range" id="slideS" class="sim-slider" min="15" max="100" value="60">
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>💼 Enterprising (E) — Bisnis &amp; Lead:</span><span id="txtE" style="color:#0055ff">78%</span></div>
+                <input type="range" id="slideE" class="sim-slider" min="15" max="100" value="78">
+              </div>
+
+              <div class="sim-group">
+                <div class="sim-label"><span>📋 Conventional (C) — Data &amp; Detail:</span><span id="txtC" style="color:#0055ff">50%</span></div>
+                <input type="range" id="slideC" class="sim-slider" min="15" max="100" value="50">
+              </div>
+
+              <div class="sim-group" style="margin-top:14px">
                 <div class="sim-label"><span>🧩 DISC Perilaku:</span></div>
                 <div class="sim-pills" id="discPills">
-                  <button class="sim-pill" data-disc="D">D (Dominance / Tegas)</button>
-                  <button class="sim-pill active" data-disc="I">I (Influence / Persuasif)</button>
-                  <button class="sim-pill" data-disc="S">S (Steadiness / Sabar)</button>
-                  <button class="sim-pill" data-disc="C">C (Compliance / Detail)</button>
+                  <button class="sim-pill" data-disc="D">D (Dominance)</button>
+                  <button class="sim-pill active" data-disc="I">I (Influence)</button>
+                  <button class="sim-pill" data-disc="S">S (Steadiness)</button>
+                  <button class="sim-pill" data-disc="C">C (Compliance)</button>
                 </div>
               </div>
 
@@ -445,7 +477,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;widt
                 </div>
               </div>
 
-              <button id="btnAnalisa" class="pill-btn lime" style="width:100%;justify-content:center;margin-top:14px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
+              <button id="btnAnalisa" class="pill-btn lime" style="width:100%;justify-content:center;margin-top:16px;font-size:14px;padding:11px 18px" data-testid="btn-analisa">⚡ Analisa 3 Jurusan Cocok Saya</button>
             </div>
 
             <!-- Dynamic Results Cards -->
@@ -752,157 +784,192 @@ const poly=document.getElementById('radarPoly');
 if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttribute('transform','translate(190,150) scale('+k+') translate(-190,-150)')},50)}
 </script>
 
+
 <script>
 (function(){
-  // Simulator State
-  let state = {
-    riasec: 85,
+  // RIASEC 6-Axis State
+  let riasecState = {
+    R: 70,
+    I: 85,
+    A: 92,
+    S: 60,
+    E: 78,
+    C: 50,
     disc: 'I',
     vak: 'Visual'
   };
 
-  const sliderRiasec = document.getElementById('sliderRiasec');
-  const txtRiasecVal = document.getElementById('txtRiasecVal');
+  // DOM Elements
+  const slideR = document.getElementById('slideR');
+  const slideI = document.getElementById('slideI');
+  const slideA = document.getElementById('slideA');
+  const slideS = document.getElementById('slideS');
+  const slideE = document.getElementById('slideE');
+  const slideC = document.getElementById('slideC');
+
+  const txtR = document.getElementById('txtR');
+  const txtI = document.getElementById('txtI');
+  const txtA = document.getElementById('txtA');
+  const txtS = document.getElementById('txtS');
+  const txtE = document.getElementById('txtE');
+  const txtC = document.getElementById('txtC');
+
+  const lblR = document.getElementById('lblR');
+  const lblI = document.getElementById('lblI');
+  const lblA = document.getElementById('lblA');
+  const lblS = document.getElementById('lblS');
+  const lblE = document.getElementById('lblE');
+  const lblC = document.getElementById('lblC');
+
+  const radarPoly = document.getElementById('radarPoly');
+  const dotR = document.getElementById('dotR');
+  const dotI = document.getElementById('dotI');
+  const dotA = document.getElementById('dotA');
+  const dotS = document.getElementById('dotS');
+  const dotE = document.getElementById('dotE');
+  const dotC = document.getElementById('dotC');
+
   const discPills = document.querySelectorAll('#discPills .sim-pill');
   const vakPills = document.querySelectorAll('#vakPills .sim-pill');
   const btnAnalisa = document.getElementById('btnAnalisa');
   const simHasil = document.getElementById('simHasil');
 
-  // SVG Elements
-  const radarPoly = document.getElementById('radarPoly');
-  const dot1 = document.getElementById('dot1');
-  const dot2 = document.getElementById('dot2');
-  const dot3 = document.getElementById('dot3');
-  const dot4 = document.getElementById('dot4');
-  const dot5 = document.getElementById('dot5');
-  const lblRiasec = document.getElementById('lblRiasec');
-  const lblDisc = document.getElementById('lblDisc');
-  const lblVak = document.getElementById('lblVak');
+  function updateHexRadar(){
+    // Convert 0-100 values to radius (max 100px)
+    let rR = (riasecState.R / 100) * 95;
+    let rI = (riasecState.I / 100) * 95;
+    let rA = (riasecState.A / 100) * 95;
+    let rS = (riasecState.S / 100) * 95;
+    let rE = (riasecState.E / 100) * 95;
+    let rC = (riasecState.C / 100) * 95;
 
-  function updateRadar(){
-    // Convert 0-100 values to pixel radius (max 110px)
-    let r1 = (state.riasec / 100) * 110;
-    
-    let r2 = 90; // MBTI
-    let r3 = 80; // DISC
-    let r4 = 75; // 16PF
-    let r5 = 85; // VAK
-
-    // Adjust DISC radius
-    if(state.disc === 'D'){ r3 = 105; r2 = 75; }
-    else if(state.disc === 'I'){ r3 = 95; r2 = 90; }
-    else if(state.disc === 'S'){ r3 = 65; r4 = 98; }
-    else if(state.disc === 'C'){ r3 = 90; r4 = 88; }
-
-    // Adjust VAK radius
-    if(state.vak === 'Visual'){ r5 = 105; }
-    else if(state.vak === 'Auditori'){ r5 = 85; }
-    else if(state.vak === 'Kinestetik'){ r5 = 98; r4 = 92; }
-    else if(state.vak === 'Read/Write'){ r5 = 75; r2 = 96; }
-
-    // 5 Pentagon vertices relative to (190, 145)
-    // 1: Top (-90 deg)
-    let p1 = { x: 0, y: -r1 };
-    // 2: Top-right (-18 deg)
-    let p2 = { x: r2 * 0.951, y: -r2 * 0.309 };
-    // 3: Bottom-right (54 deg)
-    let p3 = { x: r3 * 0.588, y: r3 * 0.809 };
-    // 4: Bottom-left (126 deg)
-    let p4 = { x: -r4 * 0.588, y: r4 * 0.809 };
-    // 5: Top-left (198 deg)
-    let p5 = { x: -r5 * 0.951, y: -r5 * 0.309 };
+    // Hexagon 6 vertices relative to (190, 140)
+    // 0: R (Top -90 deg)
+    let pR = { x: 0, y: -rR };
+    // 1: I (Top-Right -30 deg)
+    let pI = { x: rI * 0.866, y: -rI * 0.5 };
+    // 2: A (Bottom-Right 30 deg)
+    let pA = { x: rA * 0.866, y: rA * 0.5 };
+    // 3: S (Bottom 90 deg)
+    let pS = { x: 0, y: rS };
+    // 4: E (Bottom-Left 150 deg)
+    let pE = { x: -rE * 0.866, y: rE * 0.5 };
+    // 5: C (Top-Left -150 deg)
+    let pC = { x: -rC * 0.866, y: -rC * 0.5 };
 
     if(radarPoly){
-      radarPoly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y}`);
+      radarPoly.setAttribute('points', `${pR.x},${pR.y} ${pI.x},${pI.y} ${pA.x},${pA.y} ${pS.x},${pS.y} ${pE.x},${pE.y} ${pC.x},${pC.y}`);
     }
-    if(dot1){ dot1.setAttribute('cx', p1.x); dot1.setAttribute('cy', p1.y); }
-    if(dot2){ dot2.setAttribute('cx', p2.x); dot2.setAttribute('cy', p2.y); }
-    if(dot3){ dot3.setAttribute('cx', p3.x); dot3.setAttribute('cy', p3.y); }
-    if(dot4){ dot4.setAttribute('cx', p4.x); dot4.setAttribute('cy', p4.y); }
-    if(dot5){ dot5.setAttribute('cx', p5.x); dot5.setAttribute('cy', p5.y); }
 
-    // Update label text
-    let rType = "Artistic";
-    if(state.riasec < 40) rType = "Realistic";
-    else if(state.riasec < 55) rType = "Investigative";
-    else if(state.riasec < 75) rType = "Social";
-    else if(state.riasec < 90) rType = "Artistic";
-    else rType = "Enterprising";
+    if(dotR){ dotR.setAttribute('cx', pR.x); dotR.setAttribute('cy', pR.y); }
+    if(dotI){ dotI.setAttribute('cx', pI.x); dotI.setAttribute('cy', pI.y); }
+    if(dotA){ dotA.setAttribute('cx', pA.x); dotA.setAttribute('cy', pA.y); }
+    if(dotS){ dotS.setAttribute('cx', pS.x); dotS.setAttribute('cy', pS.y); }
+    if(dotE){ dotE.setAttribute('cx', pE.x); dotE.setAttribute('cy', pE.y); }
+    if(dotC){ dotC.setAttribute('cx', pC.x); dotC.setAttribute('cy', pC.y); }
 
-    if(txtRiasecVal) txtRiasecVal.textContent = `${rType} (${state.riasec}%)`;
-    if(lblRiasec) lblRiasec.textContent = `RIASEC · ${rType}`;
-    if(lblDisc) lblDisc.textContent = `DISC · ${state.disc}`;
-    if(lblVak) lblVak.textContent = `VAK · ${state.vak}`;
+    // Update text labels
+    if(txtR) txtR.textContent = `${riasecState.R}%`;
+    if(txtI) txtI.textContent = `${riasecState.I}%`;
+    if(txtA) txtA.textContent = `${riasecState.A}%`;
+    if(txtS) txtS.textContent = `${riasecState.S}%`;
+    if(txtE) txtE.textContent = `${riasecState.E}%`;
+    if(txtC) txtC.textContent = `${riasecState.C}%`;
+
+    if(lblR) lblR.textContent = `Realistic (${riasecState.R}%)`;
+    if(lblI) lblI.textContent = `Investigative (${riasecState.I}%)`;
+    if(lblA) lblA.textContent = `Artistic (${riasecState.A}%)`;
+    if(lblS) lblS.textContent = `Social (${riasecState.S}%)`;
+    if(lblE) lblE.textContent = `Enterprising (${riasecState.E}%)`;
+    if(lblC) lblC.textContent = `Conventional (${riasecState.C}%)`;
   }
 
-  // Recommendations generator
-  function renderRecommendations(){
+  function getTop2Riasec(){
+    let arr = [
+      { key: 'R', name: 'Realistic', val: riasecState.R },
+      { key: 'I', name: 'Investigative', val: riasecState.I },
+      { key: 'A', name: 'Artistic', val: riasecState.A },
+      { key: 'S', name: 'Social', val: riasecState.S },
+      { key: 'E', name: 'Enterprising', val: riasecState.E },
+      { key: 'C', name: 'Conventional', val: riasecState.C }
+    ];
+    arr.sort((a,b) => b.val - a.val);
+    return [arr[0], arr[1]];
+  }
+
+  function renderHexRecommendations(){
     if(!simHasil) return;
 
-    let rType = "Artistic";
-    if(state.riasec < 40) rType = "Realistic";
-    else if(state.riasec < 55) rType = "Investigative";
-    else if(state.riasec < 75) rType = "Social";
-    else if(state.riasec < 90) rType = "Artistic";
-    else rType = "Enterprising";
-
+    let [top1, top2] = getTop2Riasec();
+    let comboKey = top1.key + top2.key;
     let recs = [];
-    if (state.vak === 'Visual') {
-      if (state.disc === 'I' || state.disc === 'D') {
+
+    if(top1.key === 'A' || top2.key === 'A') {
+      if(top1.key === 'I' || top2.key === 'I') {
         recs = [
-          { rank: 1, name: "Desain Komunikasi Visual (DKV)", match: "96%", desc: `Sangat cocok untuk tipe ${rType} & Visual. Jago visualisasi ide ide kreatif.`, careers: "💼 UI/UX Designer • Creative Director • Brand Strategist" },
-          { rank: 2, name: "Bisnis Digital & Creative Marketing", match: "92%", desc: `Pas untuk karakter ${state.disc} & Visual. Paham strategi tren media digital.`, careers: "💼 Digital Marketer • Growth Hacker • Content Lead" },
-          { rank: 3, name: "Arsitektur / Spatial Design", match: "88%", desc: `Menggabungkan imajinasi visual dengan pemetaan ruang & rancangan struktur.`, careers: "💼 Architect • Concept Artist • Interior Consultant" }
+          { rank: 1, name: "Desain Komunikasi Visual & Interaction Design", match: "97%", desc: `Perpaduan tertinggi ${top1.name} + ${top2.name} & ${riasecState.vak}. Sangat adaptif merancang UI/UX & produk kreatif berbasis data.`, careers: "💼 UI/UX Designer • Design Strategist • Creative Technologist" },
+          { rank: 2, name: "Arsitektur & Spatial Product Design", match: "93%", desc: `Kombinasi analisis spasial rasional & daya cipta seni visual.`, careers: "💼 Concept Architect • Interior Designer • Spatial Analyst" },
+          { rank: 3, name: "Animasi & Media Digital Interaktif", match: "89%", desc: `Memadukan seni digital 3D dengan riset pengalaman pengguna.`, careers: "💼 3D Animator • Game Artist • Motion Designer" }
+        ];
+      } else if(top1.key === 'E' || top2.key === 'E') {
+        recs = [
+          { rank: 1, name: "Bisnis Digital & Creative Entrepreneurship", match: "96%", desc: `Perpaduan ${top1.name} + ${top2.name}. Pintar melihat peluang bisnis dari ide-ide kreatif media sosial.`, careers: "💼 Creative Director • E-Commerce Lead • Brand Founder" },
+          { rank: 2, name: "Pemasaran Komunikasi (Marketing Communication)", match: "92%", desc: `Kuat di penyusunan campaign, branding visual, dan persuasi audiens.`, careers: "💼 Brand Strategist • Digital Marketing Manager • Campaign Director" },
+          { rank: 3, name: "Industri Kreatif & Event Producer", match: "88%", desc: `Suka eksekusi ide acara besar & merancang strategi bisnis hiburan.`, careers: "💼 Event Director • Show Producer • Entertainment Manager" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Teknik Informatika (UI/UX & Web)", match: "95%", desc: `Kombinasi teliti (${state.disc}) & Visual. Unggul di antarmuka & coding aplikasi.`, careers: "💼 Frontend Engineer • UI/UX Architect • Web Dev" },
-          { rank: 2, name: "Animasi & Game Development", match: "91%", desc: `Presisi dalam detail pergerakan animasi 2D/3D & visual art.`, careers: "💼 3D Animator • Game Artist • Character Designer" },
-          { rank: 3, name: "Sistem Informasi Visual", match: "87%", desc: `Menghubungkan analisis data visual dengan kebutuhan bisnis modern.`, careers: "💼 Data Visualization Specialist • Business Analyst" }
+          { rank: 1, name: "Desain Komunikasi Visual (DKV)", match: "95%", desc: `Skor ${top1.name} mendominasi (${top1.val}%). Sangat berbakat dalam komunikasi visual & ekspresi seni.`, careers: "💼 Graphic Designer • Illustrator • Art Director" },
+          { rank: 2, name: "Media Komunikasi & Digital Storytelling", match: "91%", desc: `Kreatif mengolah konten cerita, film, dan karya visual media.`, careers: "💼 Video Producer • Content Creator • Scriptwriter" },
+          { rank: 3, name: "Seni Rupa & Industri Kreatif", match: "87%", desc: `Eksplorasi seni murni, fashion design, dan kerajinan inovatif.`, careers: "💼 Fashion Designer • Creative Consultant • Artist" }
         ];
       }
-    } else if (state.vak === 'Auditori') {
-      if (state.disc === 'I' || state.disc === 'D') {
+    } else if(top1.key === 'I' || top2.key === 'I') {
+      if(top1.key === 'R' || top2.key === 'R') {
         recs = [
-          { rank: 1, name: "Ilmu Komunikasi & Public Relations", match: "96%", desc: `Kuat di tipe ${state.disc} & Auditori. Persuasif dalam wicara & negosiasi publik.`, careers: "💼 PR Manager • Corporate Communicator • Media Lead" },
-          { rank: 2, name: "Hukum & Hubungan Internasional", match: "92%", desc: `Tipe argumentatif rasional, debat publik, dan diplomasi internasional.`, careers: "💼 Diplomat • Advocate • Public Policy Consultant" },
-          { rank: 3, name: "Manajemen Bisnis & Marketing", match: "88%", desc: `Unggul pitching ide bisnis, negosiasi klien, dan leadership.`, careers: "💼 Business Developer • Executive Producer • Manager" }
+          { rank: 1, name: "Teknik Informatika & Data Science", match: "98%", desc: `Kombinasi kuat ${top1.name} (${top1.val}%) & ${top2.name}. Sangat jago di pemecahan logika & coding.`, careers: "💼 Data Scientist • Software Engineer • AI Developer" },
+          { rank: 2, name: "Teknik Elektro / Mechatronics", match: "94%", desc: `Kuasai riset teknologi keras, robotika, dan algoritma perangkat cerdas.`, careers: "💼 Robotics Engineer • Hardware Engineer • IoT Specialist" },
+          { rank: 3, name: "Biomedis & Biotechnology", match: "90%", desc: `Riset teknologi laboratorium medis dan pengembangan sains hayati.`, careers: "💼 Bio-Researcher • Medical Lab Specialist • Geneticist" }
+        ];
+      } else if(top1.key === 'C' || top2.key === 'C') {
+        recs = [
+          { rank: 1, name: "Sistem Informasi & Cyber Security", match: "97%", desc: `Perpaduan ${top1.name} & ${top2.name}. Sangat teliti dalam analisa data, audit sistem, dan keamanan cyber.`, careers: "💼 Cyber Security Analyst • System Auditor • Database Architect" },
+          { rank: 2, name: "Statistika & Business Intelligence", match: "93%", desc: `Pakar analisa angka, pola data kuantitatif, dan riset pasar.`, careers: "💼 Business Intelligence Lead • Statistician • Actuary" },
+          { rank: 3, name: "Ilmu Aktuaria & Riset Keuangan", match: "89%", desc: `Fokus perhitungan risiko finansial & modeling matematika.`, careers: "💼 Actuarial Consultant • Risk Analyst • Quantitative Analyst" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Psikologi Pendidikan & Konseling", match: "94%", desc: `Pendengar yang baik (${state.disc} & Auditori). Sangat empatis mendengarkan masalah.`, careers: "💼 Psikolog Sekolah • HR Specialist • Career Coach" },
-          { rank: 2, name: "Sastra & Linguistik Terapan", match: "90%", desc: `Peka terhadap struktur bahasa, bunyi, dan analisis penerjemahan.`, careers: "💼 Linguist • Content Editor • Translator" },
-          { rank: 3, name: "Broadcasting & Audio Production", match: "86%", desc: `Fokus pada produksi media audio, broadcasting radio, dan podcasting.`, careers: "💼 Sound Producer • Broadcaster • Audio Engineer" }
+          { rank: 1, name: "Kedokteran & Sains Biomedis", match: "96%", desc: `Tipe ${top1.name} yang dominan. Sangat berdedikasi pada riset ilmiah dan diagnosis medis.`, careers: "💼 Dokter Spesialis • Medical Researcher • Biologist" },
+          { rank: 2, name: "Teknik Kimia / Farmasi", match: "92%", desc: `Riset formula obat, analisa kimiawi, dan sains laboratorium.`, careers: "💼 Pharmacist • R&D Chemical Engineer • Quality Control" },
+          { rank: 3, name: "Ilmu Fisika & Astronomi", match: "88%", desc: `Analisa fenomena alam & permodelan sains murni.`, careers: "💼 Astrophysicist • Laboratory Scientist • Academic" }
         ];
       }
-    } else if (state.vak === 'Kinestetik') {
-      if (state.disc === 'D' || state.disc === 'I') {
+    } else if(top1.key === 'E' || top2.key === 'E') {
+      if(top1.key === 'S' || top2.key === 'S') {
         recs = [
-          { rank: 1, name: "Manajemen Industri & Logistik", match: "95%", desc: `Tipe aktif (${state.disc} & Kinestetik). Suka eksekusi lapangan & praktik operasional.`, careers: "💼 Supply Chain Manager • Project Operations Manager" },
-          { rank: 2, name: "Ilmu Olahraga & Health Science", match: "91%", desc: `Fokus pada fisiologi tubuh, performa fisik, dan aktivitas kinestetik.`, careers: "💼 Sports Scientist • Fitness Coach • Performance Analyst" },
-          { rank: 3, name: "Pariwisata & Event Management", match: "87%", desc: `Dinamis di lapangan, menyukai manajemen acara live dan operasional.`, careers: "💼 Event Director • Hospitality Specialist • Project Lead" }
+          { rank: 1, name: "Ilmu Komunikasi & Public Relations", match: "97%", desc: `Sangat tinggi di ${top1.name} + ${top2.name}. Jago bangun jaringan sosial, pengaruh, & PR.`, careers: "💼 PR Director • Public Speaker • Communications Manager" },
+          { rank: 2, name: "Manajemen Bisnis & Leadership", match: "93%", desc: `Jiwa kepemimpinan kuat, negosiasi ulung, dan penggerak organisasi.`, careers: "💼 Chief Executive • Business Development Manager • Startup Founder" },
+          { rank: 3, name: "Hubungan Internasional & Diplomasi", match: "89%", desc: `Kuat di negosiasi politik dunia, advokasi sosial, dan studi global.`, careers: "💼 Diplomat • International Relations Officer • Policy Consultant" }
         ];
       } else {
         recs = [
-          { rank: 1, name: "Teknik Mesin / Otomotif", match: "96%", desc: `Suka merakit & memperbaiki perangkat fisik secara langsung.`, careers: "💼 Mechanical Engineer • Robotics Specialist • Product Tester" },
-          { rank: 2, name: "Kedokteran Hewan / Biologi Lab", match: "91%", desc: `Praktik laboratorium langsung dan interaksi fisik dengan spesimen biologis.`, careers: "💼 Veterinarian • Lab Researcher • Bio-analyst" },
-          { rank: 3, name: "Fisioterapi & Rehabilitasi Medis", match: "87%", desc: `Membantu pemulihan fisik pasien dengan metode kinestetik & terapi.`, careers: "💼 Physiotherapist • Clinical Therapist • Ergonomist" }
+          { rank: 1, name: "Manajemen Kewirausahaan (Entrepreneurship)", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Berani mengambil risiko bisnis & inovasi produk.`, careers: "💼 Business Founder • Venture Builder • Commercial Manager" },
+          { rank: 2, name: "Hukum Bisnis & Advokasi", match: "92%", desc: `Unggul di argumentasi bisnis, legalitas perusahan, dan negosiasi draf hukum.`, careers: "💼 Corporate Lawyer • Legal Manager • Advocate" },
+          { rank: 3, name: "Keuangan & Inovasi Perbankan", match: "88%", desc: `Fokus pada manajemen investasi, pendanaan bisnis, dan venture capital.`, careers: "💼 Investment Banker • Venture Capitalist • Financial Advisor" }
         ];
       }
-    } else { // Read/Write
-      if (state.disc === 'C' || state.disc === 'S') {
-        recs = [
-          { rank: 1, name: "Data Science & Statistik", match: "97%", desc: `Sangat pas untuk tipe Read/Write & ${state.disc}. Tekun menganalisis teks & data.`, careers: "💼 Data Analyst • ML Specialist • Statistician" },
-          { rank: 2, name: "Hukum / Legal Drafting", match: "93%", desc: `Kuat dalam membaca pasal, draf dokumen, dan riset analisis hukum.`, careers: "💼 Legal Counsel • Corporate Lawyer • Compliance Officer" },
-          { rank: 3, name: "Akuntansi & Keuangan Digital", match: "89%", desc: `Teliti dalam laporan keuangan, audit data, dan dokumentasi.`, careers: "💼 Auditor • Tax Consultant • Financial Analyst" }
-        ];
-      } else {
-        recs = [
-          { rank: 1, name: "Jurnalistik Digital & Content Strategy", match: "95%", desc: `Jago menulis artikel berbobot, riset literatur, dan narasi tulisan.`, careers: "💼 Editor in Chief • Journalist • Content Strategist" },
-          { rank: 2, name: "Hubungan Internasional & Research", match: "91%", desc: `Suka membaca kajian jurnal dunia, analisis diplomasi, dan policy paper.`, careers: "💼 Policy Analyst • Foreign Affairs Lead • Researcher" },
-          { rank: 3, name: "Manajemen Riset & Kebijakan Publik", match: "87%", desc: `Riset komprehensif berbasis data teks & rekomendasi kebijakan publik.`, careers: "💼 Public Policy Consultant • Think-tank Analyst" }
-        ];
-      }
+    } else if(top1.key === 'S' || top2.key === 'S') {
+      recs = [
+        { rank: 1, name: "Psikologi & Konseling Kesehatan Mental", match: "96%", desc: `Skor ${top1.name} dominan (${top1.val}%). Memiliki empati tinggi untuk bimbingan & konseling.`, careers: "💼 Psikolog Klinis • HR People Manager • Life Coach" },
+        { rank: 2, name: "Pendidikan & Penggagas Komunitas", match: "92%", desc: `Dedikasi tinggi dalam mengajar, pengembangan kurikulum, dan pengabdian masyarakat.`, careers: "💼 Educator • Education Consultant • NGO Founder" },
+        { rank: 3, name: "Fisioterapi & Layanan Kesehatan", match: "88%", desc: `Interaksi langsung membantu pemulihan kesehatan fisik masyarakat.`, careers: "💼 Clinical Therapist • Healthcare Administrator • Wellness Manager" }
+      ];
+    } else { // R or C dominant
+      recs = [
+        { rank: 1, name: "Akuntansi & Audit Keuangan Digital", match: "96%", desc: `Tipe ${top1.name} & ${top2.name}. Sangat teliti, sistematis, dan konsisten.`, careers: "💼 Senior Auditor • Financial Controller • Tax Specialist" },
+        { rank: 2, name: "Teknik Sipil & Manajemen Konstruksi", match: "92%", desc: `Fokus perancangan bangunan fisik, kalkulasi struktur, dan perizinan.`, careers: "💼 Civil Engineer • Construction Manager • Site Inspector" },
+        { rank: 3, name: "Manajemen Logistik & Rantai Pasok", match: "88%", desc: `Kuat di pengorganisasian alur barang, pergudangan, dan distribusi data bisnis.`, careers: "💼 Supply Chain Analyst • Warehouse Operations Manager • Inventory Lead" }
+      ];
     }
 
     let cardsHtml = recs.map(r => `
@@ -919,20 +986,29 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
     simHasil.innerHTML = cardsHtml;
   }
 
-  // Event Listeners
-  if(sliderRiasec){
-    sliderRiasec.addEventListener('input', function(e){
-      state.riasec = parseInt(e.target.value, 10);
-      updateRadar();
-    });
+  // Event Listeners for 6 Sliders
+  function bindSlider(slider, key){
+    if(slider){
+      slider.addEventListener('input', function(e){
+        riasecState[key] = parseInt(e.target.value, 10);
+        updateHexRadar();
+      });
+    }
   }
+
+  bindSlider(slideR, 'R');
+  bindSlider(slideI, 'I');
+  bindSlider(slideA, 'A');
+  bindSlider(slideS, 'S');
+  bindSlider(slideE, 'E');
+  bindSlider(slideC, 'C');
 
   discPills.forEach(btn => {
     btn.addEventListener('click', function(){
       discPills.forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-      state.disc = this.getAttribute('data-disc');
-      updateRadar();
+      riasecState.disc = this.getAttribute('data-disc');
+      updateHexRadar();
     });
   });
 
@@ -940,28 +1016,29 @@ if(poly){let s=0;setInterval(()=>{s+=.02;const k=1+Math.sin(s)*.012;poly.setAttr
     btn.addEventListener('click', function(){
       vakPills.forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-      state.vak = this.getAttribute('data-vak');
-      updateRadar();
+      riasecState.vak = this.getAttribute('data-vak');
+      updateHexRadar();
     });
   });
 
   if(btnAnalisa){
     btnAnalisa.addEventListener('click', function(){
       this.classList.add('loading-pulse');
-      this.textContent = '⏳ Menganalisis Perpaduan...';
+      this.textContent = '⏳ Menganalisis 6-Axis RIASEC...';
       setTimeout(() => {
         btnAnalisa.classList.remove('loading-pulse');
         btnAnalisa.textContent = '⚡ Analisa 3 Jurusan Cocok Saya';
-        renderRecommendations();
-      }, 400);
+        renderHexRecommendations();
+      }, 350);
     });
   }
 
   // Initial Run
-  updateRadar();
-  renderRecommendations();
+  updateHexRadar();
+  renderHexRecommendations();
 })();
 </script>
+
 
 </body>
 </html>
